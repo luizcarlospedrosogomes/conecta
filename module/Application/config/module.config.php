@@ -17,8 +17,18 @@ return array(
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => 'Application\Controller\Usuario',
                         'action'     => 'index',
+                    ),
+                ),
+            ),
+			'usuario' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/usuario/iniciarSessao',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Usuario',
+                        'action'     => 'iniciarSessaoAction',
                     ),
                 ),
             ),
@@ -80,6 +90,11 @@ return array(
 			'Application\Controller\Turma' => Controller\TurmaController::class
         ),
     ),
+	'session' => array(
+        'remember_me_seconds' => 2419200,
+        'use_cookies' => true,
+        'cookie_httponly' => true,
+    ),
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
@@ -100,6 +115,7 @@ return array(
     'console' => array(
         'router' => array(
             'routes' => array(
+
             ),
         ),
     ),

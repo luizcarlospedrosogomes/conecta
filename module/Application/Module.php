@@ -11,7 +11,10 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-
+use Zend\Session\Config\SessionConfig;
+use Zend\Session\Container;
+use Zend\Session\SessionManager;
+use Zend\EventManager\EventInterface;
 class Module
 {
     public function onBootstrap(MvcEvent $e)
@@ -19,6 +22,15 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+		
+		$config = $e->getApplication()
+                  ->getServiceManager()
+                  ->get('Configuration');
+
+		$sessionConfig = new SessionConfig();
+		$sessionConfig->setOptions($config['session']);
+		$sessionManager = new SessionManager($sessionConfig);
+		$sessionManager->start();
     }
 
     public function getConfig()
