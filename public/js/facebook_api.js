@@ -21,10 +21,11 @@
 
  //salvar dados em base
  function salvarDados(id, nome, foto, faculdade){
+	login(id, nome, foto, faculdade);
 	$.post('/conecta/public/usuario/iniciarSessao',
-	{id:id, nome: nome, foto: foto, faculdade: faculdade},
+	{id:id, nome: nome, foto: foto, faculdade: 1},
 	function(data){
-		//console.log(data);
+		console.log('chamou salvarDados');
 	}
 	);
  }
@@ -49,7 +50,7 @@ $('#bt-facebook').click( function(event){
             document.cookie = '1712482102324462='+response.authResponse.userID;
             document.cookie = 'ab478477ff68d9d2b7ad79298ffc586e='+response.authResponse.accessToken;
 			extrair()
-			//window.location.href = '/conecta/public/turma';
+			window.location.href = '/conecta/public/turma';
         }else{
             
 			alert('NAO LOGOU');
@@ -58,3 +59,18 @@ $('#bt-facebook').click( function(event){
         }
     }, {scope: 'user_photos, publish_actions, user_education_history, email'});    
 });
+function login(id, nome, foto, instituicao){
+		localStorage.setItem('id_usuario', id);
+		localStorage.setItem('usuario', nome);
+		localStorage.setItem('foto', foto);
+		localStorage.setItem('instituicao', 1);
+		//alert("Seja bem vindo " + localStorage.getItem('usuario') + "!");
+	}
+/*
+$('#cadastrar_turma').click
+function popularCampoTurma(){
+	$('#id_usuario').val(localStorage.getItem('id_usuario'));
+	$('#instituicao').val(localStorage.getItem('instituicao'));
+	
+}
+*/

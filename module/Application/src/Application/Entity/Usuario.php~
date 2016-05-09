@@ -1,0 +1,51 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Usuario
+ *
+ * @ORM\Table(name="usuario", indexes={@ORM\Index(name="IDX_2265B05D7CFF8F69", columns={"instituicao"})})
+ * @ORM\Entity
+ */
+class Usuario
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="id", type="string", length=40, nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\SequenceGenerator(sequenceName="usuario_id_seq", allocationSize=1, initialValue=1)
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=240, nullable=false)
+     */
+    private $nome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="text", nullable=true)
+     */
+    private $foto;
+
+    /**
+     * @var \Application\Entity\Instituicao
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Instituicao")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="instituicao", referencedColumnName="id")
+     * })
+     */
+    private $instituicao;
+
+
+}
+
