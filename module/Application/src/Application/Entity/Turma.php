@@ -44,22 +44,15 @@ class Turma
     private $ativo;
 
     /**
-     * @var \Application\Entity\Usuario
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Usuario")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="usuario", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="usuario", type="string", length=40)
      */
     private $usuario;
 
     /**
-     * @var \Application\Entity\Instituicao
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Instituicao")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="instituicao", referencedColumnName="id")
-     * })
+     * @var integer
+     * @ORM\Column(name="instituicao", type="integer")
      */
     private $instituicao;
 
@@ -150,11 +143,11 @@ class Turma
     /**
      * Set usuario
      *
-     * @param \Application\Entity\Usuario $usuario
+     * @param $usuario
      *
      * @return Turma
      */
-    public function setUsuario(\Application\Entity\Usuario $usuario = null)
+    public function setUsuarioID($usuario = null)
     {
         $this->usuario = $usuario;
 
@@ -166,7 +159,7 @@ class Turma
      *
      * @return \Application\Entity\Usuario
      */
-    public function getUsuario()
+    public function getUsuarioID()
     {
         return $this->usuario;
     }
@@ -174,11 +167,11 @@ class Turma
     /**
      * Set instituicao
      *
-     * @param \Application\Entity\Instituicao $instituicao
+     * @param  $instituicao
      *
      * @return Turma
      */
-    public function setInstituicao(\Application\Entity\Instituicao $instituicao = null)
+    public function setInstituicao($instituicao = null)
     {
         $this->instituicao = $instituicao;
 

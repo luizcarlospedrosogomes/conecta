@@ -52,7 +52,6 @@ $('#bt-facebook').click( function(event){
 			extrair()
 			window.location.href = '/conecta/public/turma';
         }else{
-            
 			alert('NAO LOGOU');
 			FB.login();
 			// console.log('O usuário Cancelou o login ou não autozirou.');

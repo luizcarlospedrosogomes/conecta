@@ -27,7 +27,7 @@
 		</div>
 		
  </div>
- <?php var_dump($usuario);?>
+ <?php echo $usuario_turma[0]['instituicao'];?>
 <fieldset>
 <legend>Adicionar Turma</legend> 
   <div class="row">
@@ -35,10 +35,11 @@
             <form role="form" method="post" action="turma/cadastro">
               
 			  <input type="hidden" name="action" value="insert" />
-			  
+			  <input type="hidden" name="id_usuario" value="<?php echo $usuario_session->id;?>"/>
+			  <input type="hidden" name="id_instituicao" value="<?php echo $usuario_turma[0]['instituicao'];?>"/>
 			  <div class="form-group has-error">
                 <label class="control-label" for="nome_turma">Nome</label>
-                <input class="form-control input-lg" id="nome_turma" placeholder="Nome " type="text">
+                <input class="form-control input-lg" id="nome_turma" name="nome_turma" placeholder="Nome " type="text">
               </div>
 			  
               <button type="submit" class="btn btn-default" id="cadastrar_turma">Cadastrar</button>

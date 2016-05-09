@@ -79,23 +79,31 @@ insert into usuario (id, nome, foto, instituicao) values ('12323131231324243', '
 insert into instituicao (descricao) values ('UTFPR');
 insert into turma(usuario, instituicao, nome, data_criacao, ativo) values('12323131231324243', 1, 'ASD16', '30/07/2016', 1);
 usuario
-
 select DISTINCT	ON(i.id) i.id
-     , t.nome 
-     , t.data_criacao
-     , t.ativo
-     , u.nome
-     , u.foto
-     , i.descricao
-     from turma t
-inner join instituicao i
-on t.instituicao = i.id
-inner join usuario u
-on u.instituicao = i.id
-group by i.id, t.nome 
-     , t.data_criacao
-     , t.ativo
-     , u.nome
-     , u.foto
-     , i.descricao
+					, t.nome  as nome_turma
+					, t.data_criacao
+					, t.ativo
+					, u.nome as nome_usuario
+					, u.foto
+					, i.descricao
+				 from turma t
+		   inner join usuario u
+				   on t.usuario = u.id
+		   inner join instituicao i
+				   on u.instituicao = i.id
+			 group by i.id, t.nome 
+					, t.data_criacao
+					, t.ativo
+					, u.nome
+					, u.foto
+					, i.descricao
+select * from usuario
+select * from turma
+
+select * 
+	from usuario u
+ inner join instituicao i
+ on u.instituicao = i.id
+ where u.id = '1034389293319874'
  */
+ select * from turma
