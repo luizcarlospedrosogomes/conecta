@@ -16,6 +16,7 @@ class TurmaController extends AbstractActionController{
 		$this->session = new Container('user');
 	}
 	public function indexAction(){
+		var_dump($this->getAlunoInstituicao($this->session->id));
 		$vars['usuario_turma']   = $this->getAlunoInstituicao($this->session->id);
 		$vars['usuario_session'] = $this->session;
 		$vars['contents']        = $this->getTurmaCadastrada();
@@ -39,7 +40,8 @@ class TurmaController extends AbstractActionController{
                 $this->getEm()->flush();
             }
         }
-        return new ViewModel();
+        return $this->redirect()->toRoute('application/default', 
+											array('controller' => 'turma', 'action' => 'index'));
 	}
 	protected function getEm() {
         if (null === $this->em)

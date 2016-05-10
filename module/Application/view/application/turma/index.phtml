@@ -43,7 +43,7 @@
 <legend>Adicionar Turma</legend> 
   <div class="row">
           <div class="col-md-12">
-            <form role="form" method="post" action="turma/cadastro">
+            <form role="form" method="post" action="<?php echo $this->url('turma-cadastro');?>">
               
 			  <input type="hidden" name="action" value="insert" />
 			  <input type="hidden" name="id_usuario" value="<?php echo $usuario_session->id;?>"/>

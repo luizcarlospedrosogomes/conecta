@@ -25,24 +25,34 @@ return array(
 			'usuario' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/usuario/iniciarSessao',
+                    'route'    => '/usuario/index',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Usuario',
-                        'action'     => 'iniciarSessaoAction',
+                        'action'     => 'index',
                     ),
                 ),
             ),
-			'turma-cadastro' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/turma/cadastro',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Turma',
-                        'action'     => 'cadastro',
-                    ),
-                ),
-            ),
-			  'turma-excluir' => array(
+		  'turma-index' => array(
+             'type' => 'literal',
+             'options' => array(
+                 'route'    => '/turma/index',
+                 'defaults' => array(
+                     'controller' => 'Turma',
+                     'action'     => 'index',
+                 ),
+             ),
+         ),
+		  'turma-cadastro' => array(
+             'type' => 'literal',
+             'options' => array(
+                 'route'    => '/turma/cadastro',
+                 'defaults' => array(
+                     'controller' => 'Turma',
+                     'action'     => 'cadastro',
+                 ),
+             ),
+         ),
+     	  'turma-excluir' => array(
                   'type'    => 'Segment',
                   'options' => array(
                       'route'    => '/turma/[:action]/[:id][/]',
