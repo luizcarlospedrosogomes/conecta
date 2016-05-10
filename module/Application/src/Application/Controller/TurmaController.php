@@ -10,12 +10,14 @@ use Zend\Mvc\Controller\Plugin\FlashMessenger;
 class TurmaController extends AbstractActionController{
 	
 	private $em;
+	private $session;
 	
+	public function __construct(){
+		$this->session = new Container('user');
+	}
 	public function indexAction(){
-		$session = new Container('user');
-		//if($this->getAlunoInstituicao($session->usuario))
-		$vars['usuario_turma']   =	$this->getAlunoInstituicao($session->id);
-		$vars['usuario_session'] = $session;
+		$vars['usuario_turma']   = $this->getAlunoInstituicao($this->session->id);
+		$vars['usuario_session'] = $this->session;
 		$vars['contents']        = $this->getTurmaCadastrada();
 
         return new ViewModel($vars);
@@ -28,7 +30,7 @@ class TurmaController extends AbstractActionController{
                 $entity = new Turma();
                 $entity->setNome($data['nome_turma'])
 					  ->setDataCriacao($this->getDataAtual())
-					  ->setUsuarioID('1034389293319874')
+					  ->setUsuarioID($data['id_usuario'])
 					  ->setInstituicao($data['id_instituicao'])
 					  ->setAtivo(1)
 				;
@@ -47,19 +49,21 @@ class TurmaController extends AbstractActionController{
 	
 	protected function getDataAtual(){
 		date_default_timezone_set('Australia/Melbourne');
-		$date = date('m/d/Y', time());
+		$date = date('d/m/Y', time());
 		return $date;
 	}
 	
 	public function getTurmaCadastrada(){   
 		$sql = " 
-		select DISTINCT	ON(i.id) i.id
+			select  i.id
+					, t.id as id_turma
 					, t.nome  as nome_turma
 					, t.data_criacao
 					, t.ativo
 					, u.nome as nome_usuario
 					, u.foto
 					, i.descricao
+					, u.id as id_usuario
 				 from turma t
 		   inner join usuario u
 				   on t.usuario = u.id
@@ -71,11 +75,14 @@ class TurmaController extends AbstractActionController{
 					, u.nome
 					, u.foto
 					, i.descricao
+					, u.id
+					, t.id
 		";
 		$stmt = $this->getEm()->getConnection()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();
 	} 
+	
 	public function getAlunoInstituicao($idAluno){   
 		$sql = " 
 		select * 
@@ -88,4 +95,17 @@ class TurmaController extends AbstractActionController{
 		$stmt->execute();
 		return $stmt->fetchAll();
 	} 
+	
+	public function excluirAction(){
+		echo "Excluir<br>";
+		echo $this->params()->fromRoute("id", 0);
+		if($this->session->id){
+			$id          = $this->params()->fromRoute("id", 0);
+			$funcionario = $this->getEM()->find("Application\Entity\Turma", $id);        
+			$this->getEM()->remove($funcionario);
+			$this->getEM()->flush();
+			return $this->redirect()->toRoute('application/default', 
+											array('controller' => 'turma', 'action' => 'index'));
+		}
+	}
 }

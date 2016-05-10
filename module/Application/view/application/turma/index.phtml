@@ -20,7 +20,18 @@
 				<td><?php echo $content['data_criacao'];?></td>
 				<td><?php echo $content['ativo'];?></td>
 				<td><?php echo $content['nome_usuario']. " ".$content['foto'];?></td>
-				<td>Clique para ingressar</td>
+				<td>
+					<?php if($content['id_usuario'] != $usuario_session->id)
+						echo "Clique para ingressar";
+						else{
+							echo "Turma cadastrada por voce";
+							?>
+							<a href="<?php echo $this->url('turma-excluir', array(
+																			'action' => 'excluir', 'id' => $content['id_turma']
+									)); ?>">
+                  Excluir</a></td>
+					<?php	}?>
+				</td>
 			   <tr>
 			   <?php endforeach; ?>
 			</table> 
@@ -48,5 +59,6 @@
           </div>
     </div>
  <fieldset>
+ 
 </div>
 </div>

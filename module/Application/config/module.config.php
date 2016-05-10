@@ -32,6 +32,26 @@ return array(
                     ),
                 ),
             ),
+			'turma-cadastro' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/turma/cadastro',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Turma',
+                        'action'     => 'cadastro',
+                    ),
+                ),
+            ),
+			  'turma-excluir' => array(
+                  'type'    => 'Segment',
+                  'options' => array(
+                      'route'    => '/turma/[:action]/[:id][/]',
+                      'defaults' => array(
+                          '__NAMESPACE__' => 'Application\Controller',
+                          'controller'    => 'Turma',
+                      ),
+                  ),
+              ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
