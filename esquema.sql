@@ -70,7 +70,31 @@ REFERENCES instituicao(id);
 alter table turma add column nome varchar(20);
 alter table turma add column data_criacao varchar(10);
 alter table turma add column ativo integer;
+*/
+create table usuario_turma(
+	id serial,
+	id_usuario varchar(40) not null, 
+	id_turma integer not null,
+	unique(id_usuario, id_turma)
+);
+alter table usuario_turma
+add constraint usuario_turma_pkey primary key(id);
+alter table usuario_turma
+add constraint usuario_turma_usuario foreign key(id_usuario)
+references usuario(id);
+alter table usuario_turma 
+add constraint usuario_turma_turma foreign key(id_turma)
+references turma(id);
 
+drop table usuario_turma
+alter table usuario_turma add column id_usuario varchar(40) not null, unique(id_usuario, id_turma)
+alter table usuario_turma drop column id_usuario
+/*=============SELECT=============================================================================
+./vendor/doctrine/doctrine-module/bin/doctrine-module orm:generate-entities ./module/Application/src/ --generate-annotations=true^C
+
+./vendor/doctrine/doctrine-module/bin/doctrine-module orm:generate-entities ./module/Album/src/ --generate-annotations=true
+
+select * from usuario_turma
 select * from turma
 select * from instituicao
 select * from usuario
@@ -105,5 +129,6 @@ select *
  inner join instituicao i
  on u.instituicao = i.id
  where u.id = '1034389293319874'
- */
+ 
  select * from turma
+ /*

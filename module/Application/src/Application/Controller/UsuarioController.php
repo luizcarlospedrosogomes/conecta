@@ -31,12 +31,8 @@ class UsuarioController extends AbstractActionController{
                     $this->getEm()->persist($entity);
 					$this->getEm()->flush();
 				}
-			//	$this->sessionUsuario($_REQUEST['id'],  $_REQUEST['nome'], $_REQUEST['foto']);
-				
 			}
 		}
-		// nao retorna view //	
-		//return $this->response;
 		return $this->redirect()->toUrl('/conecta/public/turma');
 	}
 	

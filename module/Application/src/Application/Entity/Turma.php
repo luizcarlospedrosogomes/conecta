@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Turma
  *
- * @ORM\Table(name="turma", indexes={@ORM\Index(name="IDX_2B0219A62265B05D", columns={"usuario"}), @ORM\Index(name="IDX_2B0219A67CFF8F69", columns={"instituicao"})})
+ * @ORM\Table(name="turma", indexes={@ORM\Index(name="idx_2b0219a62265b05d", columns={"usuario"}), @ORM\Index(name="idx_2b0219a67cff8f69", columns={"instituicao"})})
  * @ORM\Entity
  */
 class Turma
@@ -21,6 +21,20 @@ class Turma
      * @ORM\SequenceGenerator(sequenceName="turma_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usuario", type="string", length=40, nullable=false)
+     */
+    private $usuario;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="instituicao", type="integer", nullable=false)
+     */
+    private $instituicao;
 
     /**
      * @var string
@@ -43,19 +57,6 @@ class Turma
      */
     private $ativo;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="usuario", type="string", length=40)
-     */
-    private $usuario;
-
-    /**
-     * @var integer
-     * @ORM\Column(name="instituicao", type="integer")
-     */
-    private $instituicao;
-
 
 
     /**
@@ -66,6 +67,54 @@ class Turma
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param string $usuario
+     *
+     * @return Turma
+     */
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return string
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set instituicao
+     *
+     * @param integer $instituicao
+     *
+     * @return Turma
+     */
+    public function setInstituicao($instituicao)
+    {
+        $this->instituicao = $instituicao;
+
+        return $this;
+    }
+
+    /**
+     * Get instituicao
+     *
+     * @return integer
+     */
+    public function getInstituicao()
+    {
+        return $this->instituicao;
     }
 
     /**
@@ -139,55 +188,4 @@ class Turma
     {
         return $this->ativo;
     }
-
-    /**
-     * Set usuario
-     *
-     * @param $usuario
-     *
-     * @return Turma
-     */
-    public function setUsuarioID($usuario = null)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return \Application\Entity\Usuario
-     */
-    public function getUsuarioID()
-    {
-        return $this->usuario;
-    }
-
-    /**
-     * Set instituicao
-     *
-     * @param  $instituicao
-     *
-     * @return Turma
-     */
-    public function setInstituicao($instituicao = null)
-    {
-        $this->instituicao = $instituicao;
-
-        return $this;
-    }
-
-    /**
-     * Get instituicao
-     *
-     * @return \Application\Entity\Instituicao
-     */
-    public function getInstituicao()
-    {
-        return $this->instituicao;
-    }
-	
-	//sql join
-	
 }

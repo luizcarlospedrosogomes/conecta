@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Turma
  *
- * @ORM\Table(name="turma", indexes={@ORM\Index(name="IDX_2B0219A62265B05D", columns={"usuario"}), @ORM\Index(name="IDX_2B0219A67CFF8F69", columns={"instituicao"})})
+ * @ORM\Table(name="turma", indexes={@ORM\Index(name="idx_2b0219a62265b05d", columns={"usuario"}), @ORM\Index(name="idx_2b0219a67cff8f69", columns={"instituicao"})})
  * @ORM\Entity
  */
 class Turma
@@ -21,6 +21,20 @@ class Turma
      * @ORM\SequenceGenerator(sequenceName="turma_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usuario", type="string", length=40, nullable=false)
+     */
+    private $usuario;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="instituicao", type="integer", nullable=false)
+     */
+    private $instituicao;
 
     /**
      * @var string
@@ -42,26 +56,6 @@ class Turma
      * @ORM\Column(name="ativo", type="integer", nullable=true)
      */
     private $ativo;
-
-    /**
-     * @var \Application\Entity\Usuario
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Usuario")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="usuario", referencedColumnName="id")
-     * })
-     */
-    private $usuario;
-
-    /**
-     * @var \Application\Entity\Instituicao
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Instituicao")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="instituicao", referencedColumnName="id")
-     * })
-     */
-    private $instituicao;
 
 
 }

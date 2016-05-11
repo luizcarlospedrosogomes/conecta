@@ -1,5 +1,6 @@
 <?php
 namespace Application\Controller;
+use Application\Entity\UsuarioTurma;
 use Zend\View\Model\ViewModel;
 use	Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\EntityManager;
@@ -35,7 +36,6 @@ class TurmaController extends AbstractActionController{
 					  ->setInstituicao($data['id_instituicao'])
 					  ->setAtivo(1)
 				;
-                // Persist
                 $this->getEm()->persist($entity);
                 $this->getEm()->flush();
             }
@@ -43,6 +43,21 @@ class TurmaController extends AbstractActionController{
         return $this->redirect()->toRoute('application/default', 
 											array('controller' => 'turma', 'action' => 'index'));
 	}
+	public function ingressarAction(){
+		if($this->getRequest()->isPost()) {
+			$data = $this->params()->fromPost();
+			$entity = new UsuarioTurma();
+			$entity->setIdUsuario($data['id_usuario'])
+					->setIdTurma($data['id_turma'])
+			;
+			$this->getEm()->persist($entity);
+			$this->getEm()->flush();
+		}
+		return $this->response;
+		//return $this->redirect()->toRoute('application/default',
+		//	array('controller' => 'turma', 'action' => 'index'));
+	}
+
 	protected function getEm() {
         if (null === $this->em)
             $this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');

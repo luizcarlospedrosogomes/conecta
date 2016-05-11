@@ -52,6 +52,16 @@ return array(
                  ),
              ),
          ),
+            'turma-ingressar' => array(
+                'type' => 'literal',
+                'options' => array(
+                    'route'    => '/turma/ingressar',
+                    'defaults' => array(
+                        'controller' => 'Turma',
+                        'action'     => 'ingressar',
+                    ),
+                ),
+            ),
      	  'turma-excluir' => array(
                   'type'    => 'Segment',
                   'options' => array(

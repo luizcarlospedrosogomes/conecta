@@ -21,15 +21,19 @@
 				<td><?php echo $content['ativo'];?></td>
 				<td><?php echo $content['nome_usuario']. " ".$content['foto'];?></td>
 				<td>
-					<?php if($content['id_usuario'] != $usuario_session->id)
-						echo "Clique para ingressar";
-						else{
-							echo "Turma cadastrada por voce";
-							?>
-							<a href="<?php echo $this->url('turma-excluir', array(
+					<?php if($content['id_usuario'] != $usuario_session->id){
+						?>
+						<button type="submit" class="btn btn-default" onClick="ingressar(<?php echo $usuario_session->id;?>, <?php echo $content['id_turma'];?>)" id="ingressar_turma">Ingressar</button>
+					<?php
+					}else{
+						echo "Turma cadastrada por voce";
+						?>
+						<a href="<?php echo $this->url('turma-excluir', array(
 																			'action' => 'excluir', 'id' => $content['id_turma']
 									)); ?>">
-                  Excluir</a></td>
+                  			Excluir
+						</a>
+				</td>
 					<?php	}?>
 				</tr>
 			   <tr>
@@ -62,3 +66,13 @@
  
 </div>
 </div>
+<script>
+	function ingressar(id_usuario, id_turma){
+		$.post('<?php echo $this->url('turma-ingressar');?>',
+			{id_usuario:id_usuario, id_turma: id_turma},
+			function(data){
+				console.log('enviou usuario ' + id_usuario +' turma '+ id_turma);
+			}
+		);
+	}
+</script>
