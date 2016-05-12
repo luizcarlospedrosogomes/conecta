@@ -19,7 +19,7 @@ class UsuarioController extends AbstractActionController{
 	public function iniciarSessaoAction(){
 		
 		if($this->getRequest()->isPost()) {
-			$this->sessionUsuario($_REQUEST['id'],  $_REQUEST['nome'], $_REQUEST['foto']);
+			$this->sessionUsuario($_REQUEST['id'],  $_REQUEST['nome'], $_REQUEST['foto'], $_REQUEST['faculdade']);
 			if($_REQUEST['id']){
 				if($this->verificarUsuario($_REQUEST['id']) === NULL){
 					$entity = new Usuario();
@@ -33,6 +33,7 @@ class UsuarioController extends AbstractActionController{
 				}
 			}
 		}
+
 		return $this->redirect()->toUrl('/conecta/public/turma');
 	}
 	
@@ -41,11 +42,12 @@ class UsuarioController extends AbstractActionController{
 		  return $usuario;
 	}
 	
-	protected function sessionUsuario($id, $nome, $foto){
+	protected function sessionUsuario($id, $nome, $foto, $instituicao){
 		$session = new Container('user');
 		$session->id = $id;
 		$session->usuario = $nome;
 		$session->foto = $foto;
+		$session->instituicao =  $instituicao;
 	}
 	
 	protected function getEm() {

@@ -32,7 +32,7 @@ class TurmaController extends AbstractActionController{
                 $entity = new Turma();
                 $entity->setNome($data['nome_turma'])
 					  ->setDataCriacao($this->getDataAtual())
-					  ->setUsuarioID($data['id_usuario'])
+					  ->setUsuario($data['id_usuario'])
 					  ->setInstituicao($data['id_instituicao'])
 					  ->setAtivo(1)
 				;

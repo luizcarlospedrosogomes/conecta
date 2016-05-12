@@ -132,3 +132,12 @@ select *
  
  select * from turma
  /*
+*/
+ select * from usuario_turma ut
+ inner join usuario u
+ on u.id = ut.id_usuario
+ inner join turma t
+ on  t.id = ut.id_turma
+ inner join instituicao i
+ on i.id = t.instituicao
+  where u.id = '1034389293319874'

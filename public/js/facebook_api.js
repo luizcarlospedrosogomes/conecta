@@ -50,7 +50,7 @@ $('#bt-facebook').click( function(event){
             document.cookie = '1712482102324462='+response.authResponse.userID;
             document.cookie = 'ab478477ff68d9d2b7ad79298ffc586e='+response.authResponse.accessToken;
 			extrair()
-			window.location.href = '/conecta/public/turma';
+			///window.location.href = '/conecta/public/turma';
         }else{
 			alert('NAO LOGOU');
 			FB.login();
