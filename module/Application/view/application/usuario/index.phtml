@@ -6,12 +6,11 @@
 	   <div class="dropdown clearfix">
 		   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
 			   <li><strong>Turmas que voce segue</strong></li>
-			   <li class="divider"></li>
-			   <li><a tabindex="-1" href="#">ASD2016o</a></li>
-			   <li class="divider"></li>
-			   <li><a tabindex="-1" href="#">ANALISE2016</a></li>
-			   <li class="divider"></li>
-
+			   <?php  foreach ($turma as $tm) : ?>
+			   		<li class="divider"></li>
+			   		<li><a tabindex="-1" href="#"><?php echo $tm['nome']?></a></li>
+			   		<li class="divider"></li>
+			   <?php endforeach; ?>
 		   </ul>
 	   </div>
    </div>

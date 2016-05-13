@@ -23,16 +23,22 @@ class UsuarioTurma
     private $id;
 
     /**
-     * @var string
+     * @var \Application\Entity\Usuario
      *
-     * @ORM\Column(name="id_usuario", type="string", length=40, nullable=false)
-      */
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_usuario", referencedColumnName="id")
+     * })
+     */
     private $idUsuario;
 
     /**
-     * @var integer
+     * @var \Application\Entity\Turma
      *
-     * @ORM\Column(name="id_turma", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Turma")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_turma", referencedColumnName="id")
+     * })
      */
     private $idTurma;
 
@@ -51,11 +57,11 @@ class UsuarioTurma
     /**
      * Set idUsuario
      *
-     * @param string $idUsuario
+     * @param \Application\Entity\Usuario $idUsuario
      *
      * @return UsuarioTurma
      */
-    public function setIdUsuario($idUsuario)
+    public function setIdUsuario(\Application\Entity\Usuario $idUsuario = null)
     {
         $this->idUsuario = $idUsuario;
 
@@ -65,7 +71,7 @@ class UsuarioTurma
     /**
      * Get idUsuario
      *
-     * @return string
+     * @return \Application\Entity\Usuario
      */
     public function getIdUsuario()
     {
@@ -75,11 +81,11 @@ class UsuarioTurma
     /**
      * Set idTurma
      *
-     * @param \integer
+     * @param \Application\Entity\Turma $idTurma
      *
      * @return UsuarioTurma
      */
-    public function setIdTurma($idTurma)
+    public function setIdTurma(\Application\Entity\Turma $idTurma = null)
     {
         $this->idTurma = $idTurma;
 
@@ -89,7 +95,7 @@ class UsuarioTurma
     /**
      * Get idTurma
      *
-     * @return integer
+     * @return \Application\Entity\Turma
      */
     public function getIdTurma()
     {

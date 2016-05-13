@@ -17,7 +17,7 @@ class TurmaController extends AbstractActionController{
 		$this->session = new Container('user');
 	}
 	public function indexAction(){
-		var_dump($this->getAlunoInstituicao($this->session->id));
+		//var_dump($this->getAlunoInstituicao($this->session->id));
 		$vars['usuario_turma']   = $this->getAlunoInstituicao($this->session->id);
 		$vars['usuario_session'] = $this->session;
 		$vars['contents']        = $this->getTurmaCadastrada();
@@ -26,9 +26,8 @@ class TurmaController extends AbstractActionController{
 	}
 	
 	public function cadastroAction(){
-		if($this->getRequest()->isPost()) {
+		//if($_REQUEST['nome_turma']) {
             $data = $this->params()->fromPost();
-            if ($data['action'] == 'insert') {
                 $entity = new Turma();
                 $entity->setNome($data['nome_turma'])
 					  ->setDataCriacao($this->getDataAtual())
@@ -38,10 +37,10 @@ class TurmaController extends AbstractActionController{
 				;
                 $this->getEm()->persist($entity);
                 $this->getEm()->flush();
-            }
-        }
-        return $this->redirect()->toRoute('application/default', 
-											array('controller' => 'turma', 'action' => 'index'));
+
+        //}
+        //return $this->redirect()->toRoute('application/default',
+		//									array('controller' => 'turma', 'action' => 'index'));
 	}
 	public function ingressarAction(){
 		if($this->getRequest()->isPost()) {
@@ -54,8 +53,8 @@ class TurmaController extends AbstractActionController{
 			$this->getEm()->flush();
 		}
 		return $this->response;
-		//return $this->redirect()->toRoute('application/default',
-		//	array('controller' => 'turma', 'action' => 'index'));
+		return $this->redirect()->toRoute('application/default',
+		array('controller' => 'usuario', 'action' => 'index'));
 	}
 
 	protected function getEm() {
@@ -70,7 +69,7 @@ class TurmaController extends AbstractActionController{
 		return $date;
 	}
 	
-	public function getTurmaCadastrada(){   
+	public function getTurmaCadastrada(){
 		$sql = " 
 			select  i.id
 					, t.id as id_turma

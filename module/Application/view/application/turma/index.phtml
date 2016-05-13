@@ -42,7 +42,7 @@
 		</div>
 		
  </div>
- <?php echo $usuario_turma[0]['instituicao'];?>
+ <?php //echo $usuario_turma[0]['instituicao'];?>
 <fieldset>
 <legend>Adicionar Turma</legend> 
   <div class="row">
@@ -51,7 +51,7 @@
               
 			  <input type="hidden" name="action" value="insert" />
 			  <input type="hidden" name="id_usuario" value="<?php echo $usuario_session->id;?>"/>
-			  <input type="hidden" name="id_instituicao" value="<?php echo $usuario_session->instituicao;?>"/>
+			  <input type="hidden" name="id_instituicao" value="1"/>
 			  <div class="form-group has-error">
                 <label class="control-label" for="nome_turma">Nome</label>
                 <input class="form-control input-lg" id="nome_turma" name="nome_turma" placeholder="Nome " type="text">
@@ -71,8 +71,9 @@
 		$.post('<?php echo $this->url('turma-ingressar');?>',
 			{id_usuario:id_usuario, id_turma: id_turma},
 			function(data){
-				console.log('enviou usuario ' + id_usuario +' turma '+ id_turma);
+				///window.location.href = '/conecta/public/usuario';
 			}
 		);
+		window.location.href = '/conecta/public/usuario/index';
 	}
 </script>

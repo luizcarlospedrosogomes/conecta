@@ -13,21 +13,29 @@ class UsuarioController extends AbstractActionController{
 	private $session;
 	private $em;
 
+	public function __construct(){
+		$this->session = new Container('user');
+	}
+
 	public function indexAction(){
+		$vars['turma']   = $this->getTurmaIngressa($this->session->id);
+		$vars['usuario_session'] = $this->session;
+
+		return new ViewModel($vars);
 	}
 	
 	public function iniciarSessaoAction(){
 		
 		if($this->getRequest()->isPost()) {
 			$this->sessionUsuario($_REQUEST['id'],  $_REQUEST['nome'], $_REQUEST['foto'], $_REQUEST['faculdade']);
+
 			if($_REQUEST['id']){
 				if($this->verificarUsuario($_REQUEST['id']) === NULL){
 					$entity = new Usuario();
-					$entity->setId($_REQUEST['id'])
-				       ->setNome($_REQUEST['nome'])
-				       ->setFoto($_REQUEST['foto'])
-			           ->setInstituicao($_REQUEST['faculdade'])
-					;
+					$entity->setId($_REQUEST['id']);
+				    $entity->setNome($_REQUEST['nome']);
+				    $entity->setFoto($_REQUEST['foto']);
+			        $entity->setInstituicao($_REQUEST['faculdade']);
                     $this->getEm()->persist($entity);
 					$this->getEm()->flush();
 				}
@@ -55,4 +63,24 @@ class UsuarioController extends AbstractActionController{
             $this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         return $this->em;
     }
+
+	protected  function getTurmaIngressa($idAluno){
+		$sql = " 
+			 select t.nome
+			      , ut.id_usuario
+			      , t.data_criacao
+			  from usuario_turma ut
+ 			 inner join usuario u
+ 				on u.id = ut.id_usuario
+ 			 inner join turma t
+ 				on t.id = ut.id_turma
+ 			 inner join instituicao i
+ 				on i.id = t.instituicao
+  			 where ut.id_usuario = '".$idAluno."'
+		";
+		$stmt = $this->getEm()->getConnection()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+	}
 }
