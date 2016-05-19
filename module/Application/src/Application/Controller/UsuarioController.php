@@ -5,6 +5,7 @@ use	Zend\Mvc\Controller\AbstractActionController;
 use Zend\Session\Container;
 use Doctrine\ORM\EntityManager;
 use Application\Entity\Usuario;
+use Application\Entity\Instituicao;
 use Zend\Mvc\Controller\Plugin\FlashMessenger;
 
 class UsuarioController extends AbstractActionController{
@@ -35,7 +36,8 @@ class UsuarioController extends AbstractActionController{
 					$entity->setId($_REQUEST['id']);
 				    $entity->setNome($_REQUEST['nome']);
 				    $entity->setFoto($_REQUEST['foto']);
-			        $entity->setInstituicao($_REQUEST['faculdade']);
+                    $category =  $this->getEm()->getReference('Application\Entity\Instituicao', 1);
+                    $entity->setInstituicao($category);
                     $this->getEm()->persist($entity);
 					$this->getEm()->flush();
 				}
@@ -44,7 +46,9 @@ class UsuarioController extends AbstractActionController{
 
 		return $this->redirect()->toUrl('/conecta/public/turma');
 	}
-	
+
+   
+
 	protected function verificarUsuario($id){
 		  $usuario = $this->getEm()->find('\Application\Entity\Usuario', $id);
 		  return $usuario;

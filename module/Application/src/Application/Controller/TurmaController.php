@@ -39,9 +39,11 @@ class TurmaController extends AbstractActionController{
                 $this->getEm()->flush();
 
         //}
-        //return $this->redirect()->toRoute('application/default',
-		//									array('controller' => 'turma', 'action' => 'index'));
+		  //return $this->response;
+        return $this->redirect()->toRoute('application/default',
+											array('controller' => 'turma', 'action' => 'index'));
 	}
+
 	public function ingressarAction(){
 		if($this->getRequest()->isPost()) {
 			$data = $this->params()->fromPost();
