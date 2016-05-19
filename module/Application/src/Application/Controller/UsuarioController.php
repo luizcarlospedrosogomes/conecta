@@ -36,15 +36,16 @@ class UsuarioController extends AbstractActionController{
 					$entity->setId($_REQUEST['id']);
 				    $entity->setNome($_REQUEST['nome']);
 				    $entity->setFoto($_REQUEST['foto']);
-                    $category =  $this->getEm()->getReference('Application\Entity\Instituicao', 1);
-                    $entity->setInstituicao($category);
+                    $instituicao =  $this->getEm()->getReference('Application\Entity\Instituicao', $_REQUEST['faculdade']);
+                    $entity->setInstituicao($instituicao);
                     $this->getEm()->persist($entity);
 					$this->getEm()->flush();
 				}
 			}
 		}
-
-		return $this->redirect()->toUrl('/conecta/public/turma');
+		//return $this->response;
+		return $this->redirect()->toRoute('application/default',
+			array('controller' => 'turma', 'action' => 'index'));
 	}
 
    

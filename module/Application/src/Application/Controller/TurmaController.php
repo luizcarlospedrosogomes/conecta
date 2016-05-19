@@ -47,16 +47,19 @@ class TurmaController extends AbstractActionController{
 	public function ingressarAction(){
 		if($this->getRequest()->isPost()) {
 			$data = $this->params()->fromPost();
+			$usuario =  $this->getEm()->getReference('Application\Entity\Usuario', $data['id_usuario']);
+			$turma =  $this->getEm()->getReference('Application\Entity\Turma', $data['id_turma']);
 			$entity = new UsuarioTurma();
-			$entity->setIdUsuario($data['id_usuario'])
-					->setIdTurma($data['id_turma'])
+			$entity->setIdUsuario($usuario)
+					->setIdTurma($turma)
 			;
 			$this->getEm()->persist($entity);
 			$this->getEm()->flush();
 		}
-		return $this->response;
+
+		//return $this->response;
 		return $this->redirect()->toRoute('application/default',
-		array('controller' => 'usuario', 'action' => 'index'));
+			array('controller' => 'usuario', 'action' => 'index'));
 	}
 
 	protected function getEm() {

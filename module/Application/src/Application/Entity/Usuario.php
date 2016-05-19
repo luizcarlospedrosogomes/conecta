@@ -63,12 +63,13 @@ class Usuario
      *
      * @return Usuario
      */
-    public function setID($id)
+    public function setId($id)
     {
-        $this->id    = $id;
+        $this->id = $id;
 
         return $this;
     }
+
     /**
      * Set nome
      *

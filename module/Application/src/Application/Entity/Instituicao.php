@@ -64,6 +64,4 @@ class Instituicao
     {
         return $this->descricao;
     }
-
-  
 }
