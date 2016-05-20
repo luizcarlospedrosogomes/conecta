@@ -63,15 +63,26 @@ return array(
                 ),
             ),
      	  'turma-excluir' => array(
-                  'type'    => 'Segment',
-                  'options' => array(
-                      'route'    => '/turma/[:action]/[:id][/]',
-                      'defaults' => array(
-                          '__NAMESPACE__' => 'Application\Controller',
-                          'controller'    => 'Turma',
-                      ),
-                  ),
-              ),
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/turma/[:action]/[:id][/]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Turma',
+                    ),
+                ),
+            ),
+            'usuario-logout' => array(
+                'type'    => 'literal',
+                'options' => array(
+                    'route'    => '/usuario/logout',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Usuario',
+                        'action'        => 'logout',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them

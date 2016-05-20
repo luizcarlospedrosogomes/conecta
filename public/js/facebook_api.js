@@ -51,8 +51,8 @@ $('#bt-facebook').click( function(event){
         if (response.authResponse) {
             document.cookie = '1712482102324462='+response.authResponse.userID;
             document.cookie = 'ab478477ff68d9d2b7ad79298ffc586e='+response.authResponse.accessToken;
-			extrair()
-			window.location.href = '/conecta/public/turma';
+			extrair();
+                window.location.href = '/conecta/public/usuario';
         }else{
 			alert('NAO LOGOU');
 			FB.login();

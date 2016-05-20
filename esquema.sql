@@ -86,9 +86,11 @@ alter table usuario_turma
 add constraint usuario_turma_turma foreign key(id_turma)
 references turma(id);
 
-drop table usuario_turma
+--drop table usuario_turma
 alter table usuario_turma add column id_usuario varchar(40) not null, unique(id_usuario, id_turma)
 alter table usuario_turma drop column id_usuario
+select * from usuario_turma
+select * from usuario
 /*=============SELECT=============================================================================
 ./vendor/doctrine/doctrine-module/bin/doctrine-module orm:generate-entities ./module/Application/src/ --generate-annotations=true^C
 

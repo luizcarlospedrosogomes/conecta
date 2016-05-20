@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Application\Entity\Usuario;
 use Application\Entity\Instituicao;
 use Zend\Mvc\Controller\Plugin\FlashMessenger;
+use Zend\Session\SessionManager;
 
 class UsuarioController extends AbstractActionController{
 	
@@ -16,8 +17,17 @@ class UsuarioController extends AbstractActionController{
 
 	public function __construct(){
 		$this->session = new Container('user');
+
 	}
 
+	public function onDispatch(\Zend\Mvc\MvcEvent $e)
+	{
+		if($this->session->id == null) {
+			$this->redirect()->toRoute('home');
+		}
+		return parent::onDispatch($e);
+	}
+	
 	public function indexAction(){
 		$vars['turma']   = $this->getTurmaIngressa($this->session->id);
 		$vars['usuario_session'] = $this->session;
@@ -25,11 +35,9 @@ class UsuarioController extends AbstractActionController{
 		return new ViewModel($vars);
 	}
 	
-	public function iniciarSessaoAction(){
+	protected function iniciarSessaoAction(){
 		
 		if($this->getRequest()->isPost()) {
-			$this->sessionUsuario($_REQUEST['id'],  $_REQUEST['nome'], $_REQUEST['foto'], $_REQUEST['faculdade']);
-
 			if($_REQUEST['id']){
 				if($this->verificarUsuario($_REQUEST['id']) === NULL){
 					$entity = new Usuario();
@@ -42,19 +50,18 @@ class UsuarioController extends AbstractActionController{
 					$this->getEm()->flush();
 				}
 			}
+			$this->sessionUsuario($_REQUEST['id'],  $_REQUEST['nome'], $_REQUEST['foto'], $_REQUEST['faculdade']);
+			return $this->redirect()->toRoute('usuario');
+			//return $this->response;
 		}
-		//return $this->response;
-		return $this->redirect()->toRoute('application/default',
-			array('controller' => 'turma', 'action' => 'index'));
-	}
 
-   
+	}
 
 	protected function verificarUsuario($id){
-		  $usuario = $this->getEm()->find('\Application\Entity\Usuario', $id);
-		  return $usuario;
+		$usuario = $this->getEm()->find('\Application\Entity\Usuario', $id);
+		return $usuario;
 	}
-	
+
 	protected function sessionUsuario($id, $nome, $foto, $instituicao){
 		$session = new Container('user');
 		$session->id = $id;
@@ -88,4 +95,12 @@ class UsuarioController extends AbstractActionController{
 		return $stmt->fetchAll();
 
 	}
+	
+	public function logoutAction(){
+		$sessionManager = new SessionManager();
+		$array_of_sessions = $sessionManager->getStorage();
+		unset($array_of_sessions['user']);
+		$this->redirect()->toRoute('home');
+	}
+
 }

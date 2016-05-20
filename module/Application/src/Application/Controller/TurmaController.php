@@ -12,10 +12,28 @@ class TurmaController extends AbstractActionController{
 	
 	private $em;
 	private $session;
-	
+
 	public function __construct(){
 		$this->session = new Container('user');
+
 	}
+
+	public function onDispatch(\Zend\Mvc\MvcEvent $e)
+	{
+		if($this->session->id == null) {
+			$this->redirect()->toRoute('home');
+		}
+		return parent::onDispatch($e);
+	}
+
+	protected function verificarSession(){
+		if($this->session == null){
+            return $this->redirect()->toRoute('application/default',
+				array('controller' => 'Session', 'action' => 'index'));
+        }
+		$this->session = new Container('user');
+	}
+
 	public function indexAction(){
 		//var_dump($this->getAlunoInstituicao($this->session->id));
 		$vars['usuario_turma']   = $this->getAlunoInstituicao($this->session->id);
@@ -26,7 +44,8 @@ class TurmaController extends AbstractActionController{
 	}
 	
 	public function cadastroAction(){
-		//if($_REQUEST['nome_turma']) {
+
+		if($_REQUEST['nome_turma']) {
             $data = $this->params()->fromPost();
                 $entity = new Turma();
                 $entity->setNome($data['nome_turma'])
@@ -38,7 +57,7 @@ class TurmaController extends AbstractActionController{
                 $this->getEm()->persist($entity);
                 $this->getEm()->flush();
 
-        //}
+        }
 		  //return $this->response;
         return $this->redirect()->toRoute('application/default',
 											array('controller' => 'turma', 'action' => 'index'));
