@@ -1,0 +1,222 @@
+     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+     <!--Estilo da pagina, transferir para arquivo externo-->
+     <style>
+        .toggler { width: 500px;  display:block}
+        #cadastrar_post { padding: .5em 1em; text-decoration: none; position: absolute; top:10%; }
+        #cadastro{ margin-left:80px;width: 340px; height: 235px; padding: 0.4em; position: relative; }
+        #cadastro h3 { margin: 0; padding: 0.4em; text-align: center; }
+        #btn_cadastrar { margin: 0; padding: 0.4em; text-align: center; }
+
+        article header button{margin: 10px}
+        article header span{margin: 10px}
+        article{border: 1px solid; margin: 5px;}
+    </style>
+
+    <button id="cadastrar_post" class="ui-state-default ui-corner-all">Postar</button>
+   <div id="post">
+     <?php  foreach ($post as $pst) : ?>
+         <article>
+             <header>
+
+                 <h1 id="titulo<?php echo $pst['id_post'];?>"><?php echo $pst['titulo'];?></h1>
+
+                 <?php echo "<span> postado por ". $pst['nome']." em ".$pst['data_post']."</span>";?>
+                 <input type="hidden" name="id_post" value="<?php echo $pst['id_post'];?>" id="id_post">
+
+                 <?php if($usuario_session->id == $pst['id_usuario']){?>
+
+                    <button data-post_id="<?php echo $pst['id_post']; ?>" class="ui-state-default ui-corner-all post_id">
+                        Editar
+                    </button>
+                    <button id="exluir_post<?php echo $pst['id_post'];?>" class="ui-state-default ui-corner-all"
+                            onClick="excluir_post(<?php echo $pst['id_post'];?>)">
+                        Excluir
+                    </button>
+                 <?php }?>
+
+                 <button id="visualizar_post<?php echo $pst['id_post'];?>" class="ui-state-default ui-corner-all">Visualizar post completo</button>
+             </header>
+             <p id="conteudo<?php echo $pst['id_post'];?>"">
+                 <?php echo  $pst['conteudo'];?>
+             </p>
+         </article>
+     <?php endforeach; ?>
+   </div>
+     <script>
+         $(function() {
+             // run the currently selected effect
+             function runEffect() {
+                 var selectedEffect = "drop";
+                 var options = {};
+                 $( "#cadastro" ).show( selectedEffect, options);
+             };
+
+             //callback function to bring a hidden box back
+             function callback() {
+                 setTimeout(function() {
+                     $( "#cadastro:visible" ).removeAttr( "style" ).fadeOut();
+                 }, 1000 );
+             };
+
+             // set effect from select menu value
+             $( "#cadastrar_post" ).click(function() {
+                 runEffect();
+             });
+
+             $( "#cadastro" ).hide();
+
+         });
+
+         function excluir_post(id_post){
+             $(function() {
+                 $( "#dialog-confirm" ).dialog({
+                     resizable: false,
+                     height:140,
+                     modal: true,
+                     buttons: {
+                         "Exluir post": function() {
+                             $.post('<?php echo $this->url('post-excluir');?>',
+                                 {id_post:id_post},
+                                 function(data){
+                                     ///window.location.href = '/conecta/public/usuario';
+                                 }
+                             );
+                             $( this ).dialog( "close" );
+                         },
+                         Cancel: function() {
+                             $( this ).dialog( "close" );
+                         }
+                     }
+                 });
+             });
+             window.setTimeout('location.reload()', 1000);
+         }
+
+
+
+         $(function() {
+             var dialog, form,
+                 titulo = $( "#titulo" ),
+                 assunto = $( "#assunto" ),
+                 allFields = $( [] ).add( titulo ).add( assunto ),
+                 tips = $( ".validateTips" );
+
+             function updateTips( t ) {
+                 tips
+                     .text( t )
+                     .addClass( "ui-state-highlight" );
+                 setTimeout(function() {
+                     tips.removeClass( "ui-state-highlight", 1500 );
+                 }, 500 );
+             }
+
+             function checkLength( o, n, min, max ) {
+                 if ( o.val().length > max || o.val().length < min ) {
+                     o.addClass( "ui-state-error" );
+                     updateTips( "Para " + n + " insira no minio  " +
+                         min + " e no maximo " + max + "." );
+                     return false;
+                 } else {
+                     return true;
+                 }
+             }
+
+             function checkRegexp( o, regexp, n ) {
+                 if ( !( regexp.test( o.val() ) ) ) {
+                     o.addClass( "ui-state-error" );
+                     updateTips( n );
+                     return false;
+                 } else {
+                     return true;
+                 }
+             }
+
+             function addPost() {
+                 var valid = true;
+                 allFields.removeClass( "ui-state-error" );
+
+                 valid = valid && checkLength( titulo, "titulo", 3, 40 );
+                 valid = valid && checkLength( assunto, "assunto", 6, 1200 );
+
+                 valid = valid && checkRegexp( titulo, /^[a-z]([0-9a-z_\s])+$/i, "Não é permitido caracterer especial." );
+                 valid = valid && checkRegexp( assunto, /^[a-z]([0-9a-z_\s])+$/i, "Não é permitido caracterer especial." );
+
+
+                 if ( valid ) {
+                     $.post('<?php echo $this->url('post-cadastrar');?>',
+                         {id_turma: $( "#id_turma" ).val(), id_usuario:$( "#id_usuario" ).val(), assunto:assunto.val(), titulo:titulo.val(),},
+                         function(data){
+                         }
+                     );
+                    dialog.dialog( "close" );
+                    window.setTimeout('location.reload()', 1000);
+                 }
+                 return valid;
+             }
+
+
+             $(document).on('click', '.post_id', function() {
+                 //func();
+                 var post_id  = $(this).data('post_id');
+                 var edit_titulo   = $("#titulo"+post_id).text();
+                 var edit_assunto = $("#conteudo"+post_id).text();
+                 //editar_post(post_id, titulo, assunto);
+                 titulo.val(edit_titulo);
+                 assunto.val(edit_assunto);
+                 dialog.dialog( "open" );
+             });
+
+             dialog = $( "#dialog-form" ).dialog({
+                 autoOpen: false,
+                 height: 300,
+                 width: 450,
+                 modal: true,
+                 buttons: {
+                     "Adiconar post": addPost,
+                     Cancel: function() {
+                         dialog.dialog( "close" );
+                     }
+                 },
+                 close: function() {
+                     form[ 0 ].reset();
+                     allFields.removeClass( "ui-state-error" );
+                 }
+             });
+
+             form = dialog.find( "form" ).on( "submit", function( event ) {
+                 event.preventDefault();
+             });
+
+             $( "#cadastrar_post" ).button().on( "click", function() {
+                 dialog.dialog( "open" );
+             });
+
+
+         });
+
+   </script>
+
+   <!--Mensagem de confirmacao de exclusao de post -->
+   <div id="dialog-confirm" title="Gostaria de excluir o post?">
+      <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span></p>
+   </div>
+
+     <!--Modal para cadastro -->
+     <div id="dialog-form" title="Adicionar post">
+         <p class="validateTips">Titulo e assunto requeridos.</p>
+
+         <form>
+             <fieldset>
+                 <input type="hidden" value="<?php echo $usuario_session->id;?>" name="id_usuario" id="id_usuario">
+                 <input type="hidden" value="<?php echo $id_turma;?>" name="id_turma" id="id_turma">
+                 <label for="titulo">Titulo</label>
+                 <input type="text" name="titulo" id="titulo" class="text ui-widget-content ui-corner-all">
+                  <br>
+                 <label for="assunto">Assunto</label>
+                 <textarea rows="3" cols="43" id="assunto" name="assunto"></textarea>
+                  <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+             </fieldset>
+         </form>
+     </div>

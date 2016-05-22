@@ -72,6 +72,17 @@ return array(
                     ),
                 ),
             ),
+            'turma-post' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/post/[:nome][/]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Post',
+                        'action'       => 'index',
+                    ),
+                ),
+            ),
             'usuario-logout' => array(
                 'type'    => 'literal',
                 'options' => array(
@@ -80,6 +91,28 @@ return array(
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller'    => 'Usuario',
                         'action'        => 'logout',
+                    ),
+                ),
+            ),
+            'post-cadastrar' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/post/cadastro/',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Post',
+                        'action'       => 'cadastrar',
+                    ),
+                ),
+            ),
+            'post-excluir' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/post/excluir/',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Post',
+                        'action'       => 'excluir',
                     ),
                 ),
             ),
@@ -138,7 +171,8 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => Controller\IndexController::class,
 			'Application\Controller\Usuario' => Controller\UsuarioController::class,
-			'Application\Controller\Turma' => Controller\TurmaController::class
+			'Application\Controller\Turma' => Controller\TurmaController::class,
+            'Application\Controller\Post' => Controller\PostController::class
         ),
     ),
 	'session' => array(

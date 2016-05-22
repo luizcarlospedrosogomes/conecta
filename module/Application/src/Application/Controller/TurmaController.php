@@ -141,11 +141,16 @@ class TurmaController extends AbstractActionController{
 		echo $this->params()->fromRoute("id", 0);
 		if($this->session->id){
 			$id          = $this->params()->fromRoute("id", 0);
-			$funcionario = $this->getEM()->find("Application\Entity\Turma", $id);        
-			$this->getEM()->remove($funcionario);
+			$turma = $this->getEM()->find("Application\Entity\Turma", $id);
+			$this->getEM()->remove($turma);
 			$this->getEM()->flush();
 			return $this->redirect()->toRoute('application/default', 
 											array('controller' => 'turma', 'action' => 'index'));
 		}
+	}
+
+	public function postAction(){
+
+		
 	}
 }

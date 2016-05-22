@@ -17,7 +17,6 @@ class UsuarioController extends AbstractActionController{
 
 	public function __construct(){
 		$this->session = new Container('user');
-
 	}
 
 	public function onDispatch(\Zend\Mvc\MvcEvent $e)
@@ -78,7 +77,8 @@ class UsuarioController extends AbstractActionController{
 
 	protected  function getTurmaIngressa($idAluno){
 		$sql = " 
-			 select t.nome
+			 select t.id as id_turma 
+			 	  ,	t.nome
 			      , ut.id_usuario
 			      , t.data_criacao
 			  from usuario_turma ut

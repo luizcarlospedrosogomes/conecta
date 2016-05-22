@@ -8,7 +8,14 @@
 			   <li><strong>Turmas que voce segue</strong></li>
 			   <?php  foreach ($turma as $tm) : ?>
 			   		<li class="divider"></li>
-			   		<li><a tabindex="-1" href="#"><?php echo $tm['nome']?></a></li>
+				   <li>
+					   <a  tabindex="-1" href="<?php echo $this->url('turma-post',
+						   							array('nome' => $tm['nome']
+					   							)); ?>"
+					   >
+						   <?php echo $tm['nome']?>
+					   </a>
+				   </li>
 			   		<li class="divider"></li>
 			   <?php endforeach; ?>
 		   </ul>
