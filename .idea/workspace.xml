@@ -600,7 +600,7 @@
       <workItem from="1463765205512" duration="2444000" />
       <workItem from="1463784424339" duration="11712000" />
       <workItem from="1463853484475" duration="20573000" />
-      <workItem from="1463923874998" duration="19379000" />
+      <workItem from="1463923874998" duration="19442000" />
     </task>
     <task id="LOCAL-00001" summary="teste php storm">
       <created>1462917931153</created>
@@ -679,14 +679,21 @@
       <option name="project" value="LOCAL" />
       <updated>1463947350160</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="post: criar e excluir.">
+      <created>1463947807780</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1463947807780</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95385000" />
+    <option name="totallyTimeSpent" value="95448000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4493192" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />

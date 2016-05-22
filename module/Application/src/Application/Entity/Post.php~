@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Post
  *
- * @ORM\Table(name="post", indexes={@ORM\Index(name="IDX_5A8A6C8D7CFF8F69", columns={"instituicao"}), @ORM\Index(name="IDX_5A8A6C8D2265B05D", columns={"usuario"})})
+ * @ORM\Table(name="post", indexes={@ORM\Index(name="IDX_5A8A6C8D7CFF8F69", columns={"instituicao"}), @ORM\Index(name="IDX_5A8A6C8D2265B05D", columns={"usuario"}), @ORM\Index(name="IDX_5A8A6C8DC5875896", columns={"id_turma"})})
  * @ORM\Entity
  */
 class Post
@@ -62,6 +62,16 @@ class Post
      * })
      */
     private $usuario;
+
+    /**
+     * @var \Application\Entity\Turma
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Turma")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_turma", referencedColumnName="id")
+     * })
+     */
+    private $idTurma;
 
 
 }
