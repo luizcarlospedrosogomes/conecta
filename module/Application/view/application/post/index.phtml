@@ -1,21 +1,26 @@
-     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<?php
+    $this->headTitle()->prepend($turma);
+    echo $this->headTitle();
+?>
      <!--Estilo da pagina, transferir para arquivo externo-->
      <style>
-        .toggler { width: 500px;  display:block}
         #cadastrar_post { padding: .5em 1em; text-decoration: none; position: absolute; top:10%; }
-        #cadastro{ margin-left:80px;width: 340px; height: 235px; padding: 0.4em; position: relative; }
+        #ingressar_turma { padding: .5em 1em; text-decoration: none; position: absolute; top:10%; margin-left: 120px}
         #cadastro h3 { margin: 0; padding: 0.4em; text-align: center; }
-        #btn_cadastrar { margin: 0; padding: 0.4em; text-align: center; }
-
         article header button{margin: 10px}
         article header span{margin: 10px}
         article{border: 1px solid; margin: 5px;}
     </style>
 
-    <button id="cadastrar_post" class="ui-state-default ui-corner-all">Postar</button>
-   <div id="post">
+    <!--Verifica se usuario ja esta ingressado , se sim liberar btn postar.-->
+    <?php if(isset($ingressar) && isset($usuario_session->id)){?>
+        <button id="cadastrar_post" class="ui-state-default ui-corner-all">Postar</button>
+    <?php }?>
+    <?php if(!isset($ingressar) && isset($usuario_session->id)){?>
+        <button id="ingressar_turma" class="ui-state-default ui-corner-all" onClick="ingressar(<?php echo $usuario_session->id;?>, <?php echo $id_turma;?>)">Ingressar</button>
+    <?php }?>
+
+    <div id="post">
      <?php  foreach ($post as $pst) : ?>
          <article>
              <header>
@@ -30,13 +35,13 @@
                     <button data-post_id="<?php echo $pst['id_post']; ?>" class="ui-state-default ui-corner-all post_id">
                         Editar
                     </button>
-                    <button id="exluir_post<?php echo $pst['id_post'];?>" class="ui-state-default ui-corner-all"
+                    <button id="exluir_post<?php echo $pst['id_post'];?>" class="bnt btn-danger"
                             onClick="excluir_post(<?php echo $pst['id_post'];?>)">
                         Excluir
                     </button>
                  <?php }?>
 
-                 <button id="visualizar_post<?php echo $pst['id_post'];?>" class="ui-state-default ui-corner-all">Visualizar post completo</button>
+
              </header>
              <p id="conteudo<?php echo $pst['id_post'];?>"">
                  <?php echo  $pst['conteudo'];?>
@@ -46,14 +51,12 @@
    </div>
      <script>
          $(function() {
-             // run the currently selected effect
              function runEffect() {
                  var selectedEffect = "drop";
                  var options = {};
                  $( "#cadastro" ).show( selectedEffect, options);
              };
 
-             //callback function to bring a hidden box back
              function callback() {
                  setTimeout(function() {
                      $( "#cadastro:visible" ).removeAttr( "style" ).fadeOut();
@@ -84,20 +87,21 @@
                                  }
                              );
                              $( this ).dialog( "close" );
+                             window.setTimeout('location.reload()', 1000);
                          },
-                         Cancel: function() {
+                         Cancelar: function() {
                              $( this ).dialog( "close" );
                          }
                      }
                  });
              });
-             window.setTimeout('location.reload()', 1000);
+             //window.setTimeout('location.reload()', 1000);
          }
 
 
 
          $(function() {
-             var dialog, form,
+             var dialog, form, id_post,
                  titulo = $( "#titulo" ),
                  assunto = $( "#assunto" ),
                  allFields = $( [] ).add( titulo ).add( assunto ),
@@ -156,26 +160,67 @@
                  return valid;
              }
 
+             function editarPost(){
+                 var valid = true;
+                 allFields.removeClass( "ui-state-error" );
+
+                 valid = valid && checkLength( titulo, "titulo", 3, 40 );
+                 valid = valid && checkLength( assunto, "assunto", 6, 6000 );
+
+                 valid = valid && checkRegexp( titulo, /^[a-z]([0-9a-z_\s])+$/i, "Não é permitido caracter especial." );
+                 valid = valid && checkRegexp( assunto, /^[a-z]([0-9a-z_\s])+$/i, "Não é permitido caracter especial." );
+
+
+                 if ( valid ) {
+                     $.post('<?php echo $this->url('post-editar');?>',
+                         {id_post:id_post, id_turma: $( "#id_turma" ).val(), id_usuario:$( "#id_usuario" ).val(), assunto:assunto.val(), titulo:titulo.val(),},
+                         function(data){
+                         }
+                     );
+                     dialog.dialog( "close" );
+                     window.setTimeout('location.reload()', 1000);
+                 }
+                 return valid;
+             }
+
 
              $(document).on('click', '.post_id', function() {
-                 //func();
-                 var post_id  = $(this).data('post_id');
-                 var edit_titulo   = $("#titulo"+post_id).text();
-                 var edit_assunto = $("#conteudo"+post_id).text();
-                 //editar_post(post_id, titulo, assunto);
+
+                 id_post = $(this).data('post_id');
+                 var edit_titulo = $("#titulo" + id_post).text().trim();
+                 var edit_assunto = $("#conteudo" + id_post).text().trim();
+
                  titulo.val(edit_titulo);
                  assunto.val(edit_assunto);
-                 dialog.dialog( "open" );
+
+
+                 dialog = $("#dialog-form-post").dialog({
+                     autoOpen: false,
+                     height: 300,
+                     width: 450,
+                     modal: true,
+                     buttons: {
+                         "Editar post": editarPost,
+                         Cancelar: function () {
+                             dialog.dialog("close");
+                         }
+                     },
+                     close: function () {
+                         form[0].reset();
+                         allFields.removeClass("ui-state-error");
+                     }
+                 });
+                 dialog.dialog("open");
              });
 
-             dialog = $( "#dialog-form" ).dialog({
+             dialog = $( "#dialog-form-post" ).dialog({
                  autoOpen: false,
                  height: 300,
                  width: 450,
                  modal: true,
                  buttons: {
                      "Adiconar post": addPost,
-                     Cancel: function() {
+                     Cancelar: function() {
                          dialog.dialog( "close" );
                      }
                  },
@@ -200,11 +245,11 @@
 
    <!--Mensagem de confirmacao de exclusao de post -->
    <div id="dialog-confirm" title="Gostaria de excluir o post?">
-      <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span></p>
+      <p><span class="ui-icon ui-icon-alert"></span></p>
    </div>
 
      <!--Modal para cadastro -->
-     <div id="dialog-form" title="Adicionar post">
+     <div id="dialog-form-post" title="Adicionar post">
          <p class="validateTips">Titulo e assunto requeridos.</p>
 
          <form>
@@ -220,3 +265,14 @@
              </fieldset>
          </form>
      </div>
+     <script>
+         function ingressar(id_usuario, id_turma){
+             $.post('<?php echo $this->url('turma-ingressar');?>',
+                 {id_usuario:id_usuario, id_turma: id_turma},
+                 function(data){
+                     ///window.location.href = '/conecta/public/usuario';
+                 }
+             );
+             //window.location.href = '/conecta/public/usuario/index';
+         }
+     </script>

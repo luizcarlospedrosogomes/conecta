@@ -25,9 +25,15 @@ class PostController extends AbstractActionController
     }
 
     public function indexAction(){
-        $turma         = $this->params()->fromRoute("nome", 0);
-        $query = $this->getEM()->createQuery("SELECT t.id FROM Application\Entity\Turma t WHERE t.nome ='".$turma."'");
-        $idTurma = $query->getResult();
+        $turma          = $this->params()->fromRoute("nome", 0);
+        $query          = $this->getEM()->createQuery("SELECT t.id FROM Application\Entity\Turma t WHERE t.nome ='".$turma."'");
+        $idTurma        = $query->getResult();
+
+        $queryIngressar = $this->getEM()->createQuery("SELECT t.id FROM Application\Entity\UsuarioTurma t WHERE t.idTurma =".$idTurma[0]['id']." and t.idUsuario = '".$this->session->id."'");
+        $ingressar      = $queryIngressar->getResult();
+
+        $vars['turma']           = $turma;
+        $vars['ingressar']       = $ingressar[0]['id'];
         $vars['post']            = $this->getPostTurma($idTurma[0]['id']);
         $vars['usuario_session'] = $this->session;
         $vars['id_turma']        = $idTurma[0]['id'];
@@ -55,6 +61,22 @@ class PostController extends AbstractActionController
         }
         return $this->response;
         //return new ViewModel();
+    }
+
+    public function editarAction(){
+        if($this->params()->fromPost()){
+            $data = $this->params()->fromPost();
+            $post = $this->getEm()->find('\Application\Entity\Post', $data['id_post']);
+            $usuario = $this->getEm()->getReference('Application\Entity\Usuario', $data['id_usuario']);
+            $turma =  $this->getEm()->getReference('Application\Entity\Turma',  $data['id_turma']);
+            $post->setConteudo($data['assunto']);
+            $post->setDataPost($this->getDataAtual());
+            $post->setTitulo($data['titulo']);
+            $post->setUsuario($usuario);
+            $post->setIdTurma($turma);
+            $this->getEm()->persist($post);
+            $this->getEm()->flush();
+        }
     }
 
     public function excluirAction(){

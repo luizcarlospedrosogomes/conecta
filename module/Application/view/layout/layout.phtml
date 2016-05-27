@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-		<?php echo $this->headTitle('conecta '. $this->translate('UTFPR'))->setSeparator(' - ')->setAutoEscape(false) ?>
+		<?php echo $this->headTitle('conecta ')->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -14,7 +14,10 @@
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath('css/style.css'))
                         ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
-                        ->prependStylesheet($this->basePath('css/bootstrap.min.css')) 
+                        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                        ->prependStylesheet($this->basePath('js/ui/jquery-ui.css'))
+                        ->prependStylesheet($this->basePath('js/ui/jquery-ui.theme.min.css'))
+                        ->prependStylesheet($this->basePath('js/ui/jquery-ui.structure.min.css'))
 		?>
 		<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
@@ -66,6 +69,8 @@
         </div> <!-- /container -->
         <?php echo $this->inlineScript()
 					     ->prependFile($this->basePath('js/facebook_api.js'))
+                         ->prependFile($this->basePath('js/ui/jquery-ui.js'))
+
 		;
 		?>
     </body>

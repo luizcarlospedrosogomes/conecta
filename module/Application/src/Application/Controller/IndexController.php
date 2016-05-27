@@ -16,6 +16,7 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+       // $vars['titulo'] = "UTFPR";
         return new ViewModel();
     }
 }
