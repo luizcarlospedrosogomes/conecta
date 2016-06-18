@@ -728,7 +728,7 @@
       <workItem from="1466114369242" duration="8130000" />
       <workItem from="1466133759834" duration="10000" />
       <workItem from="1466177066325" duration="2172000" />
-      <workItem from="1466253433009" duration="26860000" />
+      <workItem from="1466253433009" duration="27459000" />
     </task>
     <task id="LOCAL-00001" summary="teste php storm">
       <created>1462917931153</created>
@@ -825,11 +825,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="193760000" />
+    <option name="totallyTimeSpent" value="194359000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21558245" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
