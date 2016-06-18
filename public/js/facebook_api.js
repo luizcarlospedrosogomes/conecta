@@ -20,8 +20,8 @@
    }(document, 'script', 'facebook-jssdk'));
 
  //salvar dados em base
+
  function salvarDados(id, nome, foto, faculdade){
-	login(id, nome, foto, faculdade);
 	$.post('/conecta/public/usuario/iniciarSessao',
 	{id:id, nome: nome, foto: foto, faculdade: 1},
 	function(data){
@@ -29,17 +29,22 @@
 	}
 	);
  }
- 
+
  //extrair dados
 function extrair(){
 	FB.api('/me',
 			{fields: "id,about,age_range,picture,bio,birthday,context,email,first_name,gender,hometown,link,location,middle_name,name,timezone,website,work"}, 
 				function(response) {
-				salvarDados(response.id, response.name, '<img src="' + response.picture.data.url + '"> ', response.hometown);
+                         $.post('/conecta/public/usuario/iniciarSessao/',
+                        {id_usuario:response.id, nome_usuario: response.name, foto: '<img src=" http://graph.facebook.com/'+ response.id + '/pciture?type=normal">', faculdade: 1},
+                        function(data){
+
+                        }
+                    );
 			}
 
 	);
-    console.log('envio dados');
+   // window.location.href = '/conecta/public/usuario';
 }
 
 $('#bt-facebook').click( function(event){
@@ -60,18 +65,3 @@ $('#bt-facebook').click( function(event){
         }
     }, {scope: 'user_photos, publish_actions, user_education_history, email'});    
 });
-function login(id, nome, foto, instituicao){
-		localStorage.setItem('id_usuario', id);
-		localStorage.setItem('usuario', nome);
-		localStorage.setItem('foto', foto);
-		localStorage.setItem('instituicao', 1);
-		//alert("Seja bem vindo " + localStorage.getItem('usuario') + "!");
-	}
-/*
-$('#cadastrar_turma').click
-function popularCampoTurma(){
-	$('#id_usuario').val(localStorage.getItem('id_usuario'));
-	$('#instituicao').val(localStorage.getItem('instituicao'));
-	
-}
-*/

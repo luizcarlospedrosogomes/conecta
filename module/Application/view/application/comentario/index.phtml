@@ -1,10 +1,12 @@
 <?php
-    $this->headTitle()->prepend($turma);
+    $this->headTitle()->prepend('Comentarios para '.$turma);
     echo $this->headTitle();
+
 ?>
+
      <!--Estilo da pagina, transferir para arquivo externo-->
      <style>
-        #cadastrar_post { padding: .5em 1em; text-decoration: none; position: absolute; top:10%; }
+        #cadastrar_comentario { padding: .5em 1em; text-decoration: none; position: absolute; top:10%; }
         #ingressar_turma { padding: .5em 1em; text-decoration: none; position: absolute; top:10%; margin-left: 120px}
         #cadastro h3 { margin: 0; padding: 0.4em; text-align: center; }
         article header button{margin: 10px}
@@ -16,50 +18,61 @@
 
     <!--Verifica se usuario ja esta ingressado , se sim liberar btn postar.-->
     <?php if(isset($ingressar) && isset($usuario_session->id)){?>
-        <button id="cadastrar_post" class="ui-state-default ui-corner-all">Postar</button>
-    <?php }?>
-    <?php if(!isset($ingressar) && isset($usuario_session->id)){?>
-        <button id="ingressar_turma" class="ui-state-default ui-corner-all" onClick="ingressar(<?php echo $usuario_session->id;?>, <?php echo $id_turma;?>)">Ingressar</button>
+        <button id="cadastrar_comentario" class="ui-state-default ui-corner-all"></button>
     <?php }?>
 
-    <div id="post">
-     <?php  foreach ($post as $pst) : ?>
+    <div id="comentario">
+     <?php  foreach ($conteudoPost as $conteudo) : ?>
          <article>
              <header>
-
-                 <h1 id="titulo<?php echo $pst['id_post'];?>"><?php echo $pst['titulo'];?></h1>
-
-                 <?php echo "<span> postado por ". $pst['nome']." em ".$pst['data_post']."</span>";?>
-                 <input type="hidden" name="id_post" value="<?php echo $pst['id_post'];?>" id="id_post">
-
-                 <?php if($usuario_session->id == $pst['id_usuario']){?>
-
-                    <button data-post_id="<?php echo $pst['id_post']; ?>" class="ui-state-default ui-corner-all post_id">
-                        Editar
-                    </button>
-                    <button id="exluir_post<?php echo $pst['id_post'];?>" class="bnt btn-danger"
-                            onClick="excluir_post(<?php echo $pst['id_post'];?>)">
-                        Excluir
-                    </button>
-                 <?php }?>
-
-                <a  href="<?php echo $this->url('comentario',
-                    array('nome' => $turma, 'id' => $pst['id_post']
-                    )); ?>">
-                    <?php if($pst['n_comentario']>0): ?>
-                        <button  class="bnt">Visualizar comentarios</button><?php echo "total de ".$pst['n_comentario'];?>
-                    <?php else:?>
-                        <button  class="bnt">Seja o primeiro a comentar</button>
-                    <?php endif;?>
-                </a>
-
+                 <h1><?php echo $conteudo['titulo'];?></h1>
+                 <?php echo "<span> postado por ". $conteudo['nome']." em ".$conteudo['data_post']."</span>";?>
              </header>
-             <p id="conteudo<?php echo $pst['id_post'];?>"">
-                 <?php echo  $pst['conteudo'];?>
+             <p>
+                 <?php echo  $conteudo['conteudo'];?>
              </p>
          </article>
      <?php endforeach; ?>
    </div>
+
+        <?php if(isset($conteudoPost[0]['id_usuario'])){?>
+            <button id="comentar" class="ui-state-default ui-corner-all">Comentar</button>
+        <?php }?>
+
+    <div id="comentarios">
+        <?php //var_dump($comentarios);?>
+        <?php// if(isset($comentarios[0])){?>
+            <?php  foreach ($comentarios as $comentario) : ?>
+                <p>
+                  <ul>
+                   <li id="comentario<?php echo $comentario['id_comentario'];?>" class="conteudo_comentario">
+                        <?php echo $comentario['conteudo'];?>
+                   </li>
+                   <li class="autor_comentario"><?php echo "Realizado por ".$comentario['autor']." em ".$comentario['data_comentario'];?></li>
+
+                    <input type="hidden" name="id_comentario" value="<?php echo $comentario['id_comentario'];?>" id="id_comentario">
+
+                   <?php if($usuario_session->id == $comentario['id_usuario']):?>
+
+                      <li class="editar_comentario">
+                          <button data-comentario_id="<?php echo $comentario['id_comentario']; ?>" class="ui-state-default ui-corner-all comentario_id">
+                              Editar
+                          </button>
+
+                          <button id="exluir_comentario<?php echo $comentario['id_comentario'];?>" class="bnt btn-danger"
+                                  onClick="excluir_comentario(<?php echo $comentario['id_comentario'];?>,<?php echo $comentario['id_usuario'];?>)">
+                              Excluir
+                          </button>
+                     </li>
+                    <?php endif; ?>
+
+               </ul>
+              </p>
+            <?php endforeach; ?>
+
+    </div>
+
+
      <script>
          $(function() {
              function runEffect() {
@@ -75,7 +88,7 @@
              };
 
              // set effect from select menu value
-             $( "#cadastrar_post" ).click(function() {
+             $( "#cadastrar_comentario" ).click(function() {
                  runEffect();
              });
 
@@ -83,7 +96,7 @@
 
          });
 
-         function excluir_post(id_post){
+         function excluir_comentario(id_comentario,id_usuario){
              $(function() {
                  $( "#dialog-confirm" ).dialog({
                      resizable: false,
@@ -91,14 +104,13 @@
                      modal: true,
                      buttons: {
                          "Exluir post": function() {
-                             $.post('<?php echo $this->url('post-excluir');?>',
-                                 {id_post:id_post},
+                             $.post('<?php echo $this->url('comentario-excluir');?>',
+                                 {id_comentario:id_comentario, id_usuario:id_usuario},
                                  function(data){
-                                     ///window.location.href = '/conecta/public/usuario';
                                  }
                              );
                              $( this ).dialog( "close" );
-                             window.setTimeout('location.reload()', 1000);
+                            window.setTimeout('location.reload()', 100);
                          },
                          Cancelar: function() {
                              $( this ).dialog( "close" );
@@ -106,16 +118,15 @@
                      }
                  });
              });
-             //window.setTimeout('location.reload()', 1000);
+            // window.setTimeout('location.reload()', 1000);
          }
 
 
 
          $(function() {
              var dialog, form, id_post,
-                 titulo = $( "#titulo" ),
-                 assunto = $( "#assunto" ),
-                 allFields = $( [] ).add( titulo ).add( assunto ),
+                 comentario = $( "#conteudo_comentario" ),
+                 allFields = $( [] ).add( comentario ),
                  tips = $( ".validateTips" );
 
              function updateTips( t ) {
@@ -152,16 +163,12 @@
                  var valid = true;
                  allFields.removeClass( "ui-state-error" );
 
-                 valid = valid && checkLength( titulo, "titulo", 3, 40 );
-                 valid = valid && checkLength( assunto, "assunto", 6, 1200 );
-
-                 valid = valid && checkRegexp( titulo, /^[a-z]([0-9a-z_\s])+$/i, "Não é permitido caracterer especial." );
-                 valid = valid && checkRegexp( assunto, /^[a-z]([0-9a-z_\s])+$/i, "Não é permitido caracterer especial." );
-
+                 valid = valid && checkLength( comentario, "comentario", 3, 100);
+                 valid = valid && checkRegexp( comentario, /^[a-z]([0-9a-z_.,\s])+$/i, "Não é permitido caracterer especial." );
 
                  if ( valid ) {
-                     $.post('<?php echo $this->url('post-cadastrar');?>',
-                         {id_turma: $( "#id_turma" ).val(), id_usuario:$( "#id_usuario" ).val(), assunto:assunto.val(), titulo:titulo.val(),},
+                         $.post('<?php echo $this->url('comentario-cadastrar');?>',
+                         {id_post: $( "#id_post" ).val(), id_usuario:$( "#id_usuario" ).val(), conteudo_comentario:comentario.val(),},
                          function(data){
                          }
                      );
@@ -171,47 +178,37 @@
                  return valid;
              }
 
-             function editarPost(){
+             function editarComentario(){
                  var valid = true;
                  allFields.removeClass( "ui-state-error" );
 
-                 valid = valid && checkLength( titulo, "titulo", 3, 40 );
-                 valid = valid && checkLength( assunto, "assunto", 6, 6000 );
-
-                 valid = valid && checkRegexp( titulo, /^[a-z]([0-9a-z_.,\s])+$/i, "Não é permitido caracter especial." );
-                 valid = valid && checkRegexp( assunto, /^[a-z]([0-9a-z_.,\s])+$/i, "Não é permitido caracter especial." );
-
+                 valid = valid && checkLength( comentario, "comentario", 3, 100);
+                 valid = valid && checkRegexp( comentario, /^[a-z]([0-9a-z_.,\s])+$/i, "Não é permitido caracterer especial." );
 
                  if ( valid ) {
-                     $.post('<?php echo $this->url('post-editar');?>',
-                         {id_post:id_post, id_turma: $( "#id_turma" ).val(), id_usuario:$( "#id_usuario" ).val(), assunto:assunto.val(), titulo:titulo.val(),},
+                     $.post('<?php echo $this->url('comentario-editar');?>',
+                         {id_comentario: comentario_id, id_usuario:$( "#id_usuario" ).val(), conteudo_comentario:comentario.val(),},
                          function(data){
                          }
                      );
                      dialog.dialog( "close" );
-                   //  window.setTimeout('location.reload()', 1000);
+                        window.setTimeout('location.reload()', 1);
                  }
                  return valid;
              }
 
 
-             $(document).on('click', '.post_id', function() {
-
-                 id_post = $(this).data('post_id');
-                 var edit_titulo = $("#titulo" + id_post).text().trim();
-                 var edit_assunto = $("#conteudo" + id_post).text().trim();
-
-                 titulo.val(edit_titulo);
-                 assunto.val(edit_assunto);
-
-
-                 dialog = $("#dialog-form-post").dialog({
+             $(document).on('click', '.comentario_id', function() {
+                 comentario_id = $(this).data('comentario_id');
+                 var edit_comentario = $("#comentario" + comentario_id).text().trim();
+                 comentario.val(edit_comentario);
+                 dialog = $("#dialog-form-comentario").dialog({
                      autoOpen: false,
                      height: 300,
                      width: 450,
                      modal: true,
                      buttons: {
-                         "Editar post": editarPost,
+                         "Editar comentario": editarComentario,
                          Cancelar: function () {
                              dialog.dialog("close");
                          }
@@ -224,13 +221,13 @@
                  dialog.dialog("open");
              });
 
-             dialog = $( "#dialog-form-post" ).dialog({
+             dialog = $( "#dialog-form-comentario" ).dialog({
                  autoOpen: false,
                  height: 300,
                  width: 450,
                  modal: true,
                  buttons: {
-                     "Adiconar post": addPost,
+                     "Adicionar comentario": addPost,
                      Cancelar: function() {
                          dialog.dialog( "close" );
                      }
@@ -245,7 +242,7 @@
                  event.preventDefault();
              });
 
-             $( "#cadastrar_post" ).button().on( "click", function() {
+             $( "#comentar" ).button().on( "click", function() {
                  dialog.dialog( "open" );
              });
 
@@ -255,23 +252,19 @@
    </script>
 
    <!--Mensagem de confirmacao de exclusao de post -->
-   <div id="dialog-confirm" title="Gostaria de excluir o post?">
-      <p><span class="ui-icon ui-icon-alert"></span></p>
+   <div id="dialog-confirm" title="Gostaria de excluir o comentario?">
    </div>
 
      <!--Modal para cadastro -->
-     <div id="dialog-form-post" title="Adicionar post">
-         <p class="validateTips">Titulo e assunto requeridos.</p>
+     <div id="dialog-form-comentario" title="Adicionar comentario">
+         <p class="validateTips">comentario</p>
 
          <form>
              <fieldset>
                  <input type="hidden" value="<?php echo $usuario_session->id;?>" name="id_usuario" id="id_usuario">
-                 <input type="hidden" value="<?php echo $id_turma;?>" name="id_turma" id="id_turma">
-                 <label for="titulo">Titulo</label>
-                 <input type="text" name="titulo" id="titulo" class="text ui-widget-content ui-corner-all">
-                  <br>
-                 <label for="assunto">Assunto</label>
-                 <textarea rows="3" cols="43" id="assunto" name="assunto"></textarea>
+                 <input type="hidden" value="<?php echo $id_post;?>" name="id_post" id="id_post">
+                 <label for="conteudo_comentario">Deixe seu comentario...</label>
+                 <textarea rows="3" cols="43" id="conteudo_comentario" name="conteudo_comentario"></textarea>
                   <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
              </fieldset>
          </form>

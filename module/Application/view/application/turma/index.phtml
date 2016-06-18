@@ -8,22 +8,23 @@
 			<thead>  
 				<th>Nome</th> 
 				<th>Data criação</th> 
-				<th>Status</th>	
 				<th>Cadastrada por</th>
 				<th>Ingressar</th>	
 			</thead>
 			<tbody>
-			   <?php  foreach ($contents as $content) : ?>
+
+			   <?php
+			   //var_dump($contents);
+			   foreach ($contents as $content) : ?>
 			   <tr>
 			   
 				<td><?php echo $content['nome_turma'];?></td>
 				<td><?php echo $content['data_criacao'];?></td>
-				<td><?php echo $content['ativo'];?></td>
 				<td><?php echo $content['nome_usuario']. " ".$content['foto'];?></td>
 				<td>
 					<?php if($content['id_usuario'] != $usuario_session->id){
 						?>
-						<button type="submit" class="ui-state-default ui-corner-all" onClick="ingressar(<?php echo $usuario_session->id;?>, <?php echo $content['id_turma'];?>)" id="ingressar_turma">Ingressar</button>
+						<button type="submit" class="ui-state-default ui-corner-all" onClick="ingressar(<?php echo $content['id_turma'];?>)" id="ingressar_turma">Ingressar</button>
 					<?php
 					}else{
 						echo "Turma cadastrada por voce";
@@ -67,13 +68,14 @@
 	 <!--</div>
      </div>-->
 <script>
-	function ingressar(id_usuario, id_turma){
+	function ingressar(id_turma){
+
 		$.post('<?php echo $this->url('turma-ingressar');?>',
-			{id_usuario:id_usuario, id_turma: id_turma},
+			{id_usuario:<?php echo "'".$usuario_session->id."'";?>, id_turma: id_turma},
 			function(data){
 				///window.location.href = '/conecta/public/usuario';
 			}
 		);
-		//window.location.href = '/conecta/public/usuario/index';
+		window.location.href = '/conecta/public/usuario/index';
 	}
 </script>

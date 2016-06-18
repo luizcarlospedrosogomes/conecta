@@ -7,17 +7,17 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Usuario
  *
- * @ORM\Table(name="usuario", indexes={@ORM\Index(name="IDX_2265B05D7CFF8F69", columns={"instituicao"})})
+ * @ORM\Table(name="usuario")
  * @ORM\Entity
  */
 class Usuario
 {
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="id", type="string", length=40, nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -31,43 +31,34 @@ class Usuario
     /**
      * @var string
      *
-     * @ORM\Column(name="foto", type="text", nullable=true)
+     * @ORM\Column(name="foto", type="text", length=65535, nullable=true)
      */
     private $foto;
 
     /**
-     * @var \Application\Entity\Instituicao
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Instituicao")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="instituicao", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="instituicao", type="integer", nullable=true)
      */
     private $instituicao;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="id_facebook", type="string", length=40, nullable=true)
+     */
+    private $idFacebook;
 
 
 
     /**
      * Get id
      *
-     * @return string
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-    /**
-     * Set id
-     *
-     * @param string $id
-     *
-     * @return Usuario
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -121,11 +112,11 @@ class Usuario
     /**
      * Set instituicao
      *
-     * @param \Application\Entity\Instituicao $instituicao
+     * @param integer $instituicao
      *
      * @return Usuario
      */
-    public function setInstituicao(\Application\Entity\Instituicao $instituicao = null)
+    public function setInstituicao($instituicao)
     {
         $this->instituicao = $instituicao;
 
@@ -135,10 +126,34 @@ class Usuario
     /**
      * Get instituicao
      *
-     * @return \Application\Entity\Instituicao
+     * @return integer
      */
     public function getInstituicao()
     {
         return $this->instituicao;
+    }
+
+    /**
+     * Set idFacebook
+     *
+     * @param string $idFacebook
+     *
+     * @return Usuario
+     */
+    public function setIdFacebook($idFacebook)
+    {
+        $this->idFacebook = $idFacebook;
+
+        return $this;
+    }
+
+    /**
+     * Get idFacebook
+     *
+     * @return string
+     */
+    public function getIdFacebook()
+    {
+        return $this->idFacebook;
     }
 }

@@ -134,6 +134,22 @@ select *
  
  select * from turma
  /*
+ CREATE TRIGGER inserir_usuario_turma
+AFTER INSERT
+ON turma
+FOR EACH ROW
+EXECUTE PROCEDURE inserir_usuario_turma_prc();
+
+CREATE OR REPLACE FUNCTION inserir_usuario_turma_prc() 
+RETURNS trigger AS
+$$
+BEGIN
+	insert into usuario_turma (id_usuario, id_turma) values(new.usuario, new.id);
+RETURN NULL;
+END;
+$$
+LANGUAGE 'plpgsql'
+
 */
  select * from usuario_turma ut
  inner join usuario u

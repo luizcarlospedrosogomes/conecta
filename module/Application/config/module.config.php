@@ -32,6 +32,16 @@ return array(
                     ),
                 ),
             ),
+            'usuario-cadastro' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/usuario/iniciarSessao',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Usuario',
+                        'action'     => 'iniciarSessao',
+                    ),
+                ),
+            ),
 		  'turma-index' => array(
              'type' => 'literal',
              'options' => array(
@@ -127,6 +137,50 @@ return array(
                     ),
                 ),
             ),
+            'comentario' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/post/[:nome][/]comentar[/]post[/][:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Comentario',
+                        'action'       => 'index',
+                    ),
+                ),
+            ),
+            'comentario-cadastrar' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/comentar/cadastro/',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Comentario',
+                        'action'       => 'cadastrar',
+                    ),
+                ),
+            ),
+            'comentario-excluir' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/comentario/excluir/',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Comentario',
+                        'action'       => 'excluir',
+                    ),
+                ),
+            ),
+            'comentario-editar' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/post/editar/',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Comentario',
+                        'action'       => 'editar',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -183,7 +237,8 @@ return array(
             'Application\Controller\Index' => Controller\IndexController::class,
 			'Application\Controller\Usuario' => Controller\UsuarioController::class,
 			'Application\Controller\Turma' => Controller\TurmaController::class,
-            'Application\Controller\Post' => Controller\PostController::class
+            'Application\Controller\Post' => Controller\PostController::class,
+            'Application\Controller\Comentario' => Controller\ComentarioController::class
         ),
     ),
 	'session' => array(

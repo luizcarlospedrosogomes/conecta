@@ -16,59 +16,59 @@ class UsuarioController extends AbstractActionController{
 	private $em;
 
 	public function __construct(){
-		$this->session = new Container('user');
+		//$this->session = new Container();
 	}
 
-	public function onDispatch(\Zend\Mvc\MvcEvent $e)
-	{
-		if($this->session->id == null) {
-			$this->redirect()->toRoute('home');
-		}
-		return parent::onDispatch($e);
-	}
-	
 	public function indexAction(){
-		$vars['turma']   = $this->getTurmaIngressa($this->session->id);
-		$vars['usuario_session'] = $this->session;
+		$user = new Container('user');
+	//	var_dump($user);
+		var_dump($user->id);
+		$vars['turma']   = $this->getTurmaIngressa($user->id);
+		$vars['usuario_session'] = $user;
 
 		return new ViewModel($vars);
 	}
 	
 	protected function iniciarSessaoAction(){
-		
-		if($this->getRequest()->isPost()) {
-			if($_REQUEST['id']){
-				if($this->verificarUsuario($_REQUEST['id']) === NULL){
+	 	$data = $this->params()->fromPost();
+			var_dump($data);
+			if ($data['id_usuario']) {
+				$ver_user = $this->verificarUsuario($_REQUEST['id_usuario']);
+				//var_dump($_REQUEST['id_usuario']);
+				if (!$ver_user[0]['id_facebook']) {
 					$entity = new Usuario();
-					$entity->setId($_REQUEST['id']);
-				    $entity->setNome($_REQUEST['nome']);
-				    $entity->setFoto($_REQUEST['foto']);
-                    $instituicao =  $this->getEm()->getReference('Application\Entity\Instituicao', $_REQUEST['faculdade']);
-                    $entity->setInstituicao($instituicao);
-                    $this->getEm()->persist($entity);
+					$entity->setIdFacebook($_REQUEST['id_usuario']);
+					$entity->setNome($_REQUEST['nome']);
+					$entity->setFoto($_REQUEST['foto']);
+					// $instituicao =  $this->getEm()->getReference('Application\Entity\Instituicao', $_REQUEST['faculdade']);
+					$entity->setInstituicao(1);
+					$this->getEm()->persist($entity);
 					$this->getEm()->flush();
 				}
+				$user = new Container('user');
+				$user->id = $data['id_usuario'];
+				$user->usuario =$data['nome'];
+				//$user->foto = $_REQUEST['foto'];
+				$user->instituicao = 1;
+				return $this->response;
+				//$this->redirect()->toRoute('usuario');
 			}
-			$this->sessionUsuario($_REQUEST['id'],  $_REQUEST['nome'], $_REQUEST['foto'], $_REQUEST['faculdade']);
-			return $this->redirect()->toRoute('usuario');
-			//return $this->response;
-		}
-
+			//die();
+			//$this->redirect()->toRoute('usuario');
 	}
 
 	protected function verificarUsuario($id){
-		$usuario = $this->getEm()->find('\Application\Entity\Usuario', $id);
-		return $usuario;
+		$sql = " 
+			 select id_facebook
+			  from usuario
+  			 where id_facebook = '".$id."'
+		";
+		$stmt = $this->getEm()->getConnection()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
 	}
 
-	protected function sessionUsuario($id, $nome, $foto, $instituicao){
-		$session = new Container('user');
-		$session->id = $id;
-		$session->usuario = $nome;
-		$session->foto = $foto;
-		$session->instituicao =  $instituicao;
-	}
-	
 	protected function getEm() {
         if (null === $this->em)
             $this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -77,19 +77,18 @@ class UsuarioController extends AbstractActionController{
 
 	protected  function getTurmaIngressa($idAluno){
 		$sql = " 
-			 select t.id as id_turma 
+			select t.id as id_turma 
 			 	  ,	t.nome
 			      , ut.id_usuario
 			      , t.data_criacao
 			  from usuario_turma ut
  			 inner join usuario u
- 				on u.id = ut.id_usuario
+ 				on u.id_facebook = ut.id_usuario
  			 inner join turma t
  				on t.id = ut.id_turma
  			 inner join instituicao i
  				on i.id = t.instituicao
-  			 where ut.id_usuario = '".$idAluno."'
-		";
+  			 where ut.id_usuario = '".$idAluno."'";
 		$stmt = $this->getEm()->getConnection()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();
@@ -97,10 +96,9 @@ class UsuarioController extends AbstractActionController{
 	}
 	
 	public function logoutAction(){
-		$sessionManager = new SessionManager();
-		$array_of_sessions = $sessionManager->getStorage();
-		unset($array_of_sessions['user']);
-		$this->redirect()->toRoute('home');
+		$sessao = new Container;
+		$sessao->getManager()->getStorage()->clear();
+		return$this->redirect()->toRoute('home');
 	}
 
 }

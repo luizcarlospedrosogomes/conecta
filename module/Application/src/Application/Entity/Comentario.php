@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Comentario
  *
- * @ORM\Table(name="comentario", indexes={@ORM\Index(name="IDX_4B91E7027CFF8F69", columns={"instituicao"})})
+ * @ORM\Table(name="comentario")
  * @ORM\Entity
  */
 class Comentario
@@ -17,8 +17,7 @@ class Comentario
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="comentario_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -30,21 +29,39 @@ class Comentario
     private $usuario;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="instituicao", type="integer", nullable=true)
+     */
+    private $instituicao;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="conteudo", type="text", nullable=true)
+     * @ORM\Column(name="conteudo", type="text", length=65535, nullable=true)
      */
     private $conteudo;
 
     /**
-     * @var \Application\Entity\Instituicao
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Instituicao")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="instituicao", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="id_post", type="integer", nullable=true)
      */
-    private $instituicao;
+    private $idPost;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="data_comentario", type="string", length=12, nullable=true)
+     */
+    private $dataComentario;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_turma", type="integer", nullable=true)
+     */
+    private $idTurma;
 
 
 
@@ -83,6 +100,30 @@ class Comentario
     }
 
     /**
+     * Set instituicao
+     *
+     * @param integer $instituicao
+     *
+     * @return Comentario
+     */
+    public function setInstituicao($instituicao)
+    {
+        $this->instituicao = $instituicao;
+
+        return $this;
+    }
+
+    /**
+     * Get instituicao
+     *
+     * @return integer
+     */
+    public function getInstituicao()
+    {
+        return $this->instituicao;
+    }
+
+    /**
      * Set conteudo
      *
      * @param string $conteudo
@@ -107,26 +148,74 @@ class Comentario
     }
 
     /**
-     * Set instituicao
+     * Set idPost
      *
-     * @param \Application\Entity\Instituicao $instituicao
+     * @param integer $idPost
      *
      * @return Comentario
      */
-    public function setInstituicao(\Application\Entity\Instituicao $instituicao = null)
+    public function setIdPost($idPost)
     {
-        $this->instituicao = $instituicao;
+        $this->idPost = $idPost;
 
         return $this;
     }
 
     /**
-     * Get instituicao
+     * Get idPost
      *
-     * @return \Application\Entity\Instituicao
+     * @return integer
      */
-    public function getInstituicao()
+    public function getIdPost()
     {
-        return $this->instituicao;
+        return $this->idPost;
+    }
+
+    /**
+     * Set dataComentario
+     *
+     * @param string $dataComentario
+     *
+     * @return Comentario
+     */
+    public function setDataComentario($dataComentario)
+    {
+        $this->dataComentario = $dataComentario;
+
+        return $this;
+    }
+
+    /**
+     * Get dataComentario
+     *
+     * @return string
+     */
+    public function getDataComentario()
+    {
+        return $this->dataComentario;
+    }
+
+    /**
+     * Set idTurma
+     *
+     * @param integer $idTurma
+     *
+     * @return Comentario
+     */
+    public function setIdTurma($idTurma)
+    {
+        $this->idTurma = $idTurma;
+
+        return $this;
+    }
+
+    /**
+     * Get idTurma
+     *
+     * @return integer
+     */
+    public function getIdTurma()
+    {
+        return $this->idTurma;
     }
 }

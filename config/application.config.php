@@ -21,4 +21,11 @@ return array(
             'config/autoload/{{,*.}global,{,*.}local}.php',
         ),
     ),
+    'phpSettings'   => array(
+        'display_startup_errors'        => false,
+        'display_errors'                => false,
+        'max_execution_time'            => 60,
+        'date.timezone'                 => 'Europe/Prague',
+        'mbstring.internal_encoding'    => 'UTF-8',
+    ),
 );

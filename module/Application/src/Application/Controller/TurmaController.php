@@ -25,17 +25,20 @@ class TurmaController extends AbstractActionController{
 		}
 		return parent::onDispatch($e);
 	}
-
+	
+	
 	protected function verificarSession(){
 		if($this->session == null){
             return $this->redirect()->toRoute('application/default',
 				array('controller' => 'Session', 'action' => 'index'));
         }
-		$this->session = new Container('user');
+		$this->session = new Container();
 	}
 
 	public function indexAction(){
-		//var_dump($this->getAlunoInstituicao($this->session->id));
+
+		$vars['turma']           = $this->session->nome;
+		$vars['ingressada']      = $this->getTurmaIngressada($this->session->id);
 		$vars['usuario_turma']   = $this->getAlunoInstituicao($this->session->id);
 		$vars['usuario_session'] = $this->session;
 		$vars['contents']        = $this->getTurmaCadastrada();
@@ -58,19 +61,17 @@ class TurmaController extends AbstractActionController{
                 $this->getEm()->flush();
 
         }
-		  //return $this->response;
-        return $this->redirect()->toRoute('application/default',
+		 //return $this->response;
+       	return $this->redirect()->toRoute('application/default',
 											array('controller' => 'turma', 'action' => 'index'));
 	}
 
 	public function ingressarAction(){
 		if($this->getRequest()->isPost()) {
 			$data = $this->params()->fromPost();
-			$usuario =  $this->getEm()->getReference('Application\Entity\Usuario', $data['id_usuario']);
-			$turma =  $this->getEm()->getReference('Application\Entity\Turma', $data['id_turma']);
 			$entity = new UsuarioTurma();
-			$entity->setIdUsuario($usuario)
-					->setIdTurma($turma)
+			$entity->setIdUsuario($data['id_usuario'])
+					->setIdTurma($data['id_turma'])
 			;
 			$this->getEm()->persist($entity);
 			$this->getEm()->flush();
@@ -103,10 +104,10 @@ class TurmaController extends AbstractActionController{
 					, u.nome as nome_usuario
 					, u.foto
 					, i.descricao
-					, u.id as id_usuario
+					, u.id_facebook as id_usuario
 				 from turma t
 		   inner join usuario u
-				   on t.usuario = u.id
+				   on t.usuario = u.id_facebook
 		   inner join instituicao i
 				   on u.instituicao = i.id
 			 group by i.id, t.nome 
@@ -121,8 +122,21 @@ class TurmaController extends AbstractActionController{
 		$stmt = $this->getEm()->getConnection()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();
-	} 
-	
+	}
+
+	public function getTurmaIngressada($idUsuario){
+		$sql = " 
+			select id
+				  , id_turma
+				  , id_usuario 
+			   from usuario_turma
+			  where id_usuario = '".$idUsuario."'
+		";
+		$stmt = $this->getEm()->getConnection()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+
 	public function getAlunoInstituicao($idAluno){   
 		$sql = " 
 		select * 

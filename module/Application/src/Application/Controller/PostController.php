@@ -31,7 +31,6 @@ class PostController extends AbstractActionController
 
         $queryIngressar = $this->getEM()->createQuery("SELECT t.id FROM Application\Entity\UsuarioTurma t WHERE t.idTurma =".$idTurma[0]['id']." and t.idUsuario = '".$this->session->id."'");
         $ingressar      = $queryIngressar->getResult();
-
         $vars['turma']           = $turma;
         $vars['ingressar']       = $ingressar[0]['id'];
         $vars['post']            = $this->getPostTurma($idTurma[0]['id']);
@@ -45,15 +44,17 @@ class PostController extends AbstractActionController
     public function cadastrarAction(){
         if($this->params()->fromPost()){
             $data = $this->params()->fromPost();
+        //var_dump($data);
             if(isset($data['id_usuario'])){
-                $usuario = $this->getEm()->getReference('Application\Entity\Usuario', $data['id_usuario']);
-                $turma =  $this->getEm()->getReference('Application\Entity\Turma',  $data['id_turma']);
+               // $usuario = $this->getEm()->getReference('Application\Entity\Usuario', $data['id_usuario']);
+               // $turma =  $this->getEm()->getReference('Application\Entity\Turma',  $data['id_turma']);
+                //var_dump($usuario);
                 $post = new Post();
                 $post->setConteudo($data['assunto']);
                 $post->setDataPost($this->getDataAtual());
                 $post->setTitulo($data['titulo']);
-                $post->setUsuario($usuario);
-                $post->setIdTurma($turma);
+                $post->setUsuario($data['id_usuario']);
+                $post->setIdTurma($data['id_turma']);
                 $this->getEm()->persist($post);
                 $this->getEm()->flush();
             }
@@ -67,13 +68,13 @@ class PostController extends AbstractActionController
         if($this->params()->fromPost()){
             $data = $this->params()->fromPost();
             $post = $this->getEm()->find('\Application\Entity\Post', $data['id_post']);
-            $usuario = $this->getEm()->getReference('Application\Entity\Usuario', $data['id_usuario']);
-            $turma =  $this->getEm()->getReference('Application\Entity\Turma',  $data['id_turma']);
+            //$usuario = $this->getEm()->getReference('Application\Entity\Usuario', $data['id_usuario']);
+            //$turma =  $this->getEm()->getReference('Application\Entity\Turma',  $data['id_turma']);
             $post->setConteudo($data['assunto']);
             $post->setDataPost($this->getDataAtual());
             $post->setTitulo($data['titulo']);
-            $post->setUsuario($usuario);
-            $post->setIdTurma($turma);
+            $post->setUsuario($data['id_usuario']);
+            $post->setIdTurma($data['id_turma']);
             $this->getEm()->persist($post);
             $this->getEm()->flush();
         }
@@ -100,12 +101,13 @@ class PostController extends AbstractActionController
                      , p.conteudo
                      , p.id as id_post
                      , p.data_post
-                     , u.id as id_usuario
+                     , u.id_facebook as id_usuario
                      , u.nome
                      , u.foto
+                     , (select count(c.id) from comentario c where c.id_post = p.id ) as n_comentario
                   from post p
                  inner join usuario u
-                    on p.usuario = u.id
+                    on p.usuario = u.id_facebook
                     where p.id_turma =".$idTurma;
         $stmt = $this->getEm()->getConnection()->prepare($sql);
         $stmt->execute();

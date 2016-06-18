@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Post
  *
- * @ORM\Table(name="post", indexes={@ORM\Index(name="IDX_5A8A6C8D7CFF8F69", columns={"instituicao"}), @ORM\Index(name="IDX_5A8A6C8D2265B05D", columns={"usuario"}), @ORM\Index(name="IDX_5A8A6C8DC5875896", columns={"id_turma"})})
+ * @ORM\Table(name="post", indexes={@ORM\Index(name="fk_grade_id", columns={"usuario"})})
  * @ORM\Entity
  */
 class Post
@@ -17,61 +17,51 @@ class Post
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="post_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=50, nullable=false)
+     * @ORM\Column(name="usuario", type="string", length=40, nullable=true)
+     */
+    private $usuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=35, nullable=true)
      */
     private $titulo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="conteudo", type="text", nullable=false)
+     * @ORM\Column(name="conteudo", type="text", length=65535, nullable=true)
      */
     private $conteudo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="data_post", type="string", length=10, nullable=false)
+     * @ORM\Column(name="data_post", type="string", length=14, nullable=true)
      */
     private $dataPost;
 
     /**
-     * @var \Application\Entity\Instituicao
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Instituicao")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="instituicao", referencedColumnName="id")
-     * })
-     */
-    private $instituicao;
-
-    /**
-     * @var \Application\Entity\Usuario
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Usuario")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="usuario", referencedColumnName="id")
-     * })
-     */
-    private $usuario;
-
-    /**
-     * @var \Application\Entity\Turma
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Turma")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_turma", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="id_turma", type="integer", nullable=true)
      */
     private $idTurma;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="instituicao", type="integer", nullable=true)
+     */
+    private $instituicao;
 
 
 
@@ -83,6 +73,30 @@ class Post
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param string $usuario
+     *
+     * @return Post
+     */
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return string
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 
     /**
@@ -158,61 +172,13 @@ class Post
     }
 
     /**
-     * Set instituicao
-     *
-     * @param \Application\Entity\Instituicao $instituicao
-     *
-     * @return Post
-     */
-    public function setInstituicao(\Application\Entity\Instituicao $instituicao = null)
-    {
-        $this->instituicao = $instituicao;
-
-        return $this;
-    }
-
-    /**
-     * Get instituicao
-     *
-     * @return \Application\Entity\Instituicao
-     */
-    public function getInstituicao()
-    {
-        return $this->instituicao;
-    }
-
-    /**
-     * Set usuario
-     *
-     * @param \Application\Entity\Usuario $usuario
-     *
-     * @return Post
-     */
-    public function setUsuario(\Application\Entity\Usuario $usuario = null)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return \Application\Entity\Usuario
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
-    }
-
-    /**
      * Set idTurma
      *
-     * @param \Application\Entity\Turma $idTurma
+     * @param integer $idTurma
      *
      * @return Post
      */
-    public function setIdTurma(\Application\Entity\Turma $idTurma = null)
+    public function setIdTurma($idTurma)
     {
         $this->idTurma = $idTurma;
 
@@ -222,10 +188,34 @@ class Post
     /**
      * Get idTurma
      *
-     * @return \Application\Entity\Turma
+     * @return integer
      */
     public function getIdTurma()
     {
         return $this->idTurma;
+    }
+
+    /**
+     * Set instituicao
+     *
+     * @param integer $instituicao
+     *
+     * @return Post
+     */
+    public function setInstituicao($instituicao)
+    {
+        $this->instituicao = $instituicao;
+
+        return $this;
+    }
+
+    /**
+     * Get instituicao
+     *
+     * @return integer
+     */
+    public function getInstituicao()
+    {
+        return $this->instituicao;
     }
 }

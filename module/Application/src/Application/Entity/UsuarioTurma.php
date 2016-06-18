@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UsuarioTurma
  *
- * @ORM\Table(name="usuario_turma", uniqueConstraints={@ORM\UniqueConstraint(name="usuario_turma_id_usuario_id_turma_key", columns={"id_usuario", "id_turma"})}, indexes={@ORM\Index(name="IDX_36DC73B8FCF8192D", columns={"id_usuario"}), @ORM\Index(name="IDX_36DC73B8C5875896", columns={"id_turma"})})
+ * @ORM\Table(name="usuario_turma")
  * @ORM\Entity
  */
 class UsuarioTurma
@@ -17,28 +17,21 @@ class UsuarioTurma
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="usuario_turma_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var \Application\Entity\Usuario
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Usuario")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_usuario", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="id_usuario", type="string", length=40, nullable=false)
      */
     private $idUsuario;
 
     /**
-     * @var \Application\Entity\Turma
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Turma")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_turma", referencedColumnName="id")
-     * })
+     * @ORM\Column(name="id_turma", type="integer", nullable=false)
      */
     private $idTurma;
 
@@ -57,11 +50,11 @@ class UsuarioTurma
     /**
      * Set idUsuario
      *
-     * @param \Application\Entity\Usuario $idUsuario
+     * @param string $idUsuario
      *
      * @return UsuarioTurma
      */
-    public function setIdUsuario(\Application\Entity\Usuario $idUsuario = null)
+    public function setIdUsuario($idUsuario)
     {
         $this->idUsuario = $idUsuario;
 
@@ -71,7 +64,7 @@ class UsuarioTurma
     /**
      * Get idUsuario
      *
-     * @return \Application\Entity\Usuario
+     * @return string
      */
     public function getIdUsuario()
     {
@@ -81,11 +74,11 @@ class UsuarioTurma
     /**
      * Set idTurma
      *
-     * @param \Application\Entity\Turma $idTurma
+     * @param integer $idTurma
      *
      * @return UsuarioTurma
      */
-    public function setIdTurma(\Application\Entity\Turma $idTurma = null)
+    public function setIdTurma($idTurma)
     {
         $this->idTurma = $idTurma;
 
@@ -95,7 +88,7 @@ class UsuarioTurma
     /**
      * Get idTurma
      *
-     * @return \Application\Entity\Turma
+     * @return integer
      */
     public function getIdTurma()
     {

@@ -41,3 +41,62 @@
         </div>
     </div>
 </div>
+<script>
+
+    var nome;
+    var id;
+    var foto;
+    var faculdade;
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1712482102324462',
+            xfbml      : true,
+            version    : 'v2.6'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    //salvar dados em base
+
+    function salvarDados(id, nome, faculdade){
+        $.post('<?php echo $this->url('usuario-cadastro');?>',
+            {id_usuario:id, nome: nome, faculdade: 1},
+            function(data) {
+                $(location).attr('href', '<?php echo $this->url('usuario');?>');
+                //windown.location = '<?php //echo $this->url('usuario');?>';
+            });
+    }
+
+    $('#bt-facebook').click( function(event){
+
+        event.preventDefault();
+        destino = this.href;
+
+        FB.login( function(response){
+            if (response.authResponse) {
+                document.cookie = '1712482102324462='+response.authResponse.userID;
+                document.cookie = 'ab478477ff68d9d2b7ad79298ffc586e='+response.authResponse.accessToken;
+                FB.api('/me',
+                    {fields: "id,about,age_range,picture,bio,birthday,context,email,first_name,gender,hometown,link,location,middle_name,name,timezone,website,work"},
+                    function(response) {
+                        console.log(response.id);
+                        salvarDados(response.id, response.name, response.hometown);
+                    }
+                );
+            }else{
+                alert('NAO LOGOU');
+                FB.login();
+                // console.log('O usuário Cancelou o login ou não autozirou.');
+            }
+        }, {scope: 'user_photos, publish_actions, user_education_history, email'});
+    });
+
+</script>

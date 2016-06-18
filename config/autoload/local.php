@@ -16,12 +16,12 @@ return array(
     'doctrine' => array(
         'connection' => array(
             'orm_default' => array(
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOPgSql\Driver',
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMysql\Driver',
                 'params' => array(
-                    'host'     => '192.168.70.101',
-                    'port'     => '5432',
-                    'user'     => 'postgres',
-                    'password' => 'admin',
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'user'     => 'root',
+                    'password' => '',
                     'dbname'   => 'conecta',
                 )
             )

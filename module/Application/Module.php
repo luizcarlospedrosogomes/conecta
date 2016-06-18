@@ -23,7 +23,7 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 		
-		$config = $e->getApplication()
+		/*$config = $e->getApplication()
                   ->getServiceManager()
                   ->get('Configuration');
 
@@ -31,6 +31,8 @@ class Module
 		$sessionConfig->setOptions($config['session']);
 		$sessionManager = new SessionManager($sessionConfig);
 		$sessionManager->start();
+        Container::setDefaultManager($sessionManager);
+		*/
     }
 
     public function getConfig()

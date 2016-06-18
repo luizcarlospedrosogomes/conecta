@@ -64,10 +64,10 @@ class Usuario extends \Application\Entity\Usuario implements \Doctrine\ORM\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'nome', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'foto', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'instituicao');
+            return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'nome', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'foto', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'instituicao', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'idFacebook');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'nome', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'foto', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'instituicao');
+        return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'nome', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'foto', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'instituicao', '' . "\0" . 'Application\\Entity\\Usuario' . "\0" . 'idFacebook');
     }
 
     /**
@@ -179,24 +179,13 @@ class Usuario extends \Application\Entity\Usuario implements \Doctrine\ORM\Proxy
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
-            return  parent::getId();
+            return (int)  parent::getId();
         }
 
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getId', array());
 
         return parent::getId();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setId($id)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setId', array($id));
-
-        return parent::setId($id);
     }
 
     /**
@@ -246,7 +235,7 @@ class Usuario extends \Application\Entity\Usuario implements \Doctrine\ORM\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setInstituicao(\Application\Entity\Instituicao $instituicao = NULL)
+    public function setInstituicao($instituicao)
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setInstituicao', array($instituicao));
@@ -263,6 +252,28 @@ class Usuario extends \Application\Entity\Usuario implements \Doctrine\ORM\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getInstituicao', array());
 
         return parent::getInstituicao();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIdFacebook($idFacebook)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIdFacebook', array($idFacebook));
+
+        return parent::setIdFacebook($idFacebook);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIdFacebook()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIdFacebook', array());
+
+        return parent::getIdFacebook();
     }
 
 }
