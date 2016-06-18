@@ -3,19 +3,18 @@
 	</p>
    <div class="bs-docs-example">
 	   <div class="dropdown clearfix">
-		   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
+		   <ul class="dropdown-menu list-group " role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
 			   <li><strong>Turmas que voce segue</strong></li>
 			   <?php  foreach ($turma as $tm) : ?>
-			   		<li class="divider"></li>
-				   <li>
+			   		<li class="list-group-item">
 					   <a  tabindex="-1" href="<?php echo $this->url('turma-post',
 						   							array('nome' => $tm['nome']
 					   							)); ?>"
 					   >
-						   <?php echo $tm['nome']?>
+						   <?php echo $tm['nome']."<span class=\"badge\">".$tm['n_post']."</span>";?>
 					   </a>
 				   </li>
-			   		<li class="divider"></li>
+
 			   <?php endforeach; ?>
 		   </ul>
 	   </div>

@@ -9,10 +9,12 @@
         #cadastrar_comentario { padding: .5em 1em; text-decoration: none; position: absolute; top:10%; }
         #ingressar_turma { padding: .5em 1em; text-decoration: none; position: absolute; top:10%; margin-left: 120px}
         #cadastro h3 { margin: 0; padding: 0.4em; text-align: center; }
+        #comentario{list-style: none;}
         article header button{margin: 10px}
         article header span{margin: 10px}
         article{border: 1px solid; margin: 5px;}
-        #post{margin-top: 100px;}
+        .autor_comentario{font-size: 12px;}
+        .conteudo_comentario{font-style: normal; font-weight: normal;}
 
     </style>
 
@@ -34,45 +36,56 @@
          </article>
      <?php endforeach; ?>
    </div>
-
-        <?php if(isset($conteudoPost[0]['id_usuario'])){?>
-            <button id="comentar" class="ui-state-default ui-corner-all">Comentar</button>
-        <?php }?>
-
-    <div id="comentarios">
-        <?php //var_dump($comentarios);?>
-        <?php// if(isset($comentarios[0])){?>
-            <?php  foreach ($comentarios as $comentario) : ?>
-                <p>
-                  <ul>
-                   <li id="comentario<?php echo $comentario['id_comentario'];?>" class="conteudo_comentario">
+<!--comentarios-->
+<div id="comentarios">
+     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    <?php if(isset($conteudoPost[0]['id_usuario'])){?>
+                        <button id="comentar" class="ui-state-default ui-corner-all">Comentar</button>
+                    <?php }?>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+         <?php  foreach ($comentarios as $comentario) : ?>
+            <tr>
+             <th scope="row">
+                <ul class="list-group">
+                    <li id="comentario<?php echo $comentario['id_comentario'];?>" class="conteudo_comentario list-group-item">
                         <?php echo $comentario['conteudo'];?>
-                   </li>
-                   <li class="autor_comentario"><?php echo "Realizado por ".$comentario['autor']." em ".$comentario['data_comentario'];?></li>
+                    </li>
+                    <li class="autor_comentario list-group-item">
+                        <?php echo "Realizado por ".$comentario['autor']." em ".$comentario['data_comentario'];?>
+
 
                     <input type="hidden" name="id_comentario" value="<?php echo $comentario['id_comentario'];?>" id="id_comentario">
 
-                   <?php if($usuario_session->id == $comentario['id_usuario']):?>
+                    <?php if($usuario_session->id == $comentario['id_usuario']):?>
 
-                      <li class="editar_comentario">
-                          <button data-comentario_id="<?php echo $comentario['id_comentario']; ?>" class="ui-state-default ui-corner-all comentario_id">
-                              Editar
-                          </button>
 
-                          <button id="exluir_comentario<?php echo $comentario['id_comentario'];?>" class="bnt btn-danger"
-                                  onClick="excluir_comentario(<?php echo $comentario['id_comentario'];?>,<?php echo $comentario['id_usuario'];?>)">
-                              Excluir
-                          </button>
-                     </li>
+                            <button data-comentario_id="<?php echo $comentario['id_comentario']; ?>" class="ui-state-default ui-corner-all comentario_id">
+                                Editar
+                            </button>
+
+                            <button id="exluir_comentario<?php echo $comentario['id_comentario'];?>" class="bnt btn-danger"
+                                    onClick="excluir_comentario(<?php echo $comentario['id_comentario'];?>,<?php echo $comentario['id_usuario'];?>)">
+                                Excluir
+                            </button>
+                    </li>
                     <?php endif; ?>
 
-               </ul>
-              </p>
-            <?php endforeach; ?>
+                </ul>
+            </th>
+            </tr>
+         <?php endforeach; ?>
+        </tr>
 
+    </tbody>
+    </table>
     </div>
-
-
      <script>
          $(function() {
              function runEffect() {

@@ -81,6 +81,7 @@ class UsuarioController extends AbstractActionController{
 			 	  ,	t.nome
 			      , ut.id_usuario
 			      , t.data_criacao
+			      , (select count(id)  from post p  where p.id_turma = t.id) as n_post
 			  from usuario_turma ut
  			 inner join usuario u
  				on u.id_facebook = ut.id_usuario

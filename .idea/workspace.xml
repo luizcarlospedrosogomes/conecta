@@ -48,29 +48,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TurmaController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/module/Application/src/Application/Controller/TurmaController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="16" column="44" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="44" />
-              <folding>
-                <element signature="e#40#76#0#PHP" expanded="true" />
-                <marker date="1466267453238" expanded="true" signature="2744:3220" placeholder="select i.id turma" />
-                <marker date="1466267453238" expanded="true" signature="3400:3495" placeholder="select id , usuario_turma" />
-                <marker date="1466267453238" expanded="true" signature="3400:3512" placeholder="select id , usuario_turma" />
-                <marker date="1466267453238" expanded="true" signature="3693:3805" placeholder="select * fro... usuario" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.phtml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/module/Application/view/application/comentario/index.phtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="194" column="64" selection-start-line="194" selection-start-column="64" selection-end-line="194" selection-end-column="64" />
+            <state relative-caret-position="187">
+              <caret line="59" column="63" selection-start-line="59" selection-start-column="63" selection-end-line="59" selection-end-column="63" />
               <folding>
-                <marker date="1466280174421" expanded="true" signature="10601:10623" placeholder="{...}" />
+                <marker date="1466286744265" expanded="true" signature="10975:10997" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -87,24 +71,35 @@
         </entry>
       </file>
       <file leaf-file-name="index.phtml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/module/Application/view/application/post/index.phtml">
+        <entry file="file://$PROJECT_DIR$/module/Application/view/application/usuario/index.phtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="49" column="97" selection-start-line="49" selection-start-column="97" selection-end-line="49" selection-end-column="97" />
+            <state relative-caret-position="221">
+              <caret line="13" column="101" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="101" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UsuarioController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.phtml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/module/Application/view/application/post/index.phtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="373">
+              <caret line="50" column="85" selection-start-line="50" selection-start-column="85" selection-end-line="50" selection-end-column="85" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UsuarioController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/module/Application/src/Application/Controller/UsuarioController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="89" column="39" selection-start-line="79" selection-start-column="12" selection-end-line="89" selection-end-column="39" />
+            <state relative-caret-position="289">
+              <caret line="83" column="86" selection-start-line="83" selection-start-column="86" selection-end-line="83" selection-end-column="86" />
               <folding>
                 <element signature="e#40#70#0#PHP" expanded="true" />
-                <marker date="1466266745341" expanded="true" signature="1790:1862" placeholder="select id_fa... usuario" />
-                <marker date="1466266745341" expanded="true" signature="2225:2560" placeholder="select t.id usuario_turma" />
+                <marker date="1466284627247" expanded="true" signature="1790:1862" placeholder="select id_fa... usuario" />
+                <marker date="1466284627247" expanded="true" signature="2225:2638" placeholder="select t.id usuario_turma" />
+                <marker date="1466284627247" expanded="true" signature="2329:2383" placeholder="select count... post" />
               </folding>
             </state>
           </provider>
@@ -220,20 +215,20 @@
         <option value="$PROJECT_DIR$/module/Application/src/Application/Entity/Comentario.php" />
         <option value="$PROJECT_DIR$/config/application.config.php" />
         <option value="$PROJECT_DIR$/public/js/facebook_api.js" />
-        <option value="$PROJECT_DIR$/module/Application/view/application/usuario/index.phtml" />
         <option value="$PROJECT_DIR$/public/index.php" />
         <option value="$PROJECT_DIR$/module/Application/src/Application/Entity/Usuario.php" />
         <option value="$PROJECT_DIR$/config/autoload/local.php" />
         <option value="$PROJECT_DIR$/module/Application/Module.php" />
-        <option value="$PROJECT_DIR$/module/Application/src/Application/Controller/UsuarioController.php" />
         <option value="$PROJECT_DIR$/module/Application/view/application/index/index.phtml" />
         <option value="$PROJECT_DIR$/module/Application/src/Application/Controller/TurmaController.php" />
         <option value="$PROJECT_DIR$/module/Application/view/layout/layout.phtml" />
         <option value="$PROJECT_DIR$/module/Application/config/module.config.php" />
         <option value="$PROJECT_DIR$/module/Application/src/Application/Controller/ComentarioController.php" />
-        <option value="$PROJECT_DIR$/module/Application/view/application/comentario/index.phtml" />
         <option value="$PROJECT_DIR$/module/Application/view/application/turma/index.phtml" />
         <option value="$PROJECT_DIR$/module/Application/src/Application/Controller/PostController.php" />
+        <option value="$PROJECT_DIR$/module/Application/src/Application/Controller/UsuarioController.php" />
+        <option value="$PROJECT_DIR$/module/Application/view/application/comentario/index.phtml" />
+        <option value="$PROJECT_DIR$/module/Application/view/application/usuario/index.phtml" />
         <option value="$PROJECT_DIR$/module/Application/view/application/post/index.phtml" />
       </list>
     </option>
@@ -406,6 +401,10 @@
               <option name="myItemId" value="application" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="usuario" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -464,6 +463,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="post" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="conecta" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="conecta" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="application" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -723,7 +748,7 @@
       <workItem from="1466114369242" duration="8130000" />
       <workItem from="1466133759834" duration="10000" />
       <workItem from="1466177066325" duration="2172000" />
-      <workItem from="1466253433009" duration="23609000" />
+      <workItem from="1466253433009" duration="26447000" />
     </task>
     <task id="LOCAL-00001" summary="teste php storm">
       <created>1462917931153</created>
@@ -820,7 +845,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190509000" />
+    <option name="totallyTimeSpent" value="193347000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -1178,14 +1203,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/Application/view/application/usuario/index.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/application.config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1256,16 +1273,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/Application/view/application/comentario/index.phtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="194" column="64" selection-start-line="194" selection-start-column="64" selection-end-line="194" selection-end-column="64" />
-          <folding>
-            <marker date="1466280174421" expanded="true" signature="10601:10623" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/module/Application/view/application/turma/index.phtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="422">
@@ -1318,23 +1325,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/Application/view/application/post/index.phtml">
+    <entry file="file://$PROJECT_DIR$/module/Application/src/Application/Controller/UsuarioController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="49" column="97" selection-start-line="49" selection-start-column="97" selection-end-line="49" selection-end-column="97" />
+        <state relative-caret-position="289">
+          <caret line="83" column="86" selection-start-line="83" selection-start-column="86" selection-end-line="83" selection-end-column="86" />
+          <folding>
+            <element signature="e#40#70#0#PHP" expanded="true" />
+            <marker date="1466284627247" expanded="true" signature="1790:1862" placeholder="select id_fa... usuario" />
+            <marker date="1466284627247" expanded="true" signature="2225:2638" placeholder="select t.id usuario_turma" />
+            <marker date="1466284627247" expanded="true" signature="2329:2383" placeholder="select count... post" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Application/view/application/comentario/index.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="59" column="63" selection-start-line="59" selection-start-column="63" selection-end-line="59" selection-end-column="63" />
+          <folding>
+            <marker date="1466286744265" expanded="true" signature="10975:10997" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Application/view/application/usuario/index.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="101" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="101" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/module/Application/src/Application/Controller/UsuarioController.php">
+    <entry file="file://$PROJECT_DIR$/module/Application/view/application/post/index.phtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="89" column="39" selection-start-line="79" selection-start-column="12" selection-end-line="89" selection-end-column="39" />
-          <folding>
-            <element signature="e#40#70#0#PHP" expanded="true" />
-            <marker date="1466266745341" expanded="true" signature="1790:1862" placeholder="select id_fa... usuario" />
-            <marker date="1466266745341" expanded="true" signature="2225:2560" placeholder="select t.id usuario_turma" />
-          </folding>
+        <state relative-caret-position="373">
+          <caret line="50" column="85" selection-start-line="50" selection-start-column="85" selection-end-line="50" selection-end-column="85" />
+          <folding />
         </state>
       </provider>
     </entry>

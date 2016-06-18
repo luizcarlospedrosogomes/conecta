@@ -47,9 +47,11 @@
                     array('nome' => $turma, 'id' => $pst['id_post']
                     )); ?>">
                     <?php if($pst['n_comentario']>0): ?>
-                        <button  class="bnt">Visualizar comentarios</button><?php echo "total de ".$pst['n_comentario'];?>
+                        <button class="btn btn-info">Visualizar comentarios</button>
+                        <?php echo "<span class=\"badge\">".$pst['n_comentario']."  comentario(s) </span>";?>
                     <?php else:?>
-                        <button  class="bnt">Seja o primeiro a comentar</button>
+                        <button  class="btn btn-info">Seja o primeiro a comentar</button>
+                        <span class=badge">0</span>
                     <?php endif;?>
                 </a>
 
