@@ -22,7 +22,7 @@ class UsuarioController extends AbstractActionController{
 	public function indexAction(){
 		$user = new Container('user');
 	//	var_dump($user);
-		var_dump($user->id);
+		//var_dump($user->id);
 		$vars['turma']   = $this->getTurmaIngressa($user->id);
 		$vars['usuario_session'] = $user;
 
@@ -31,7 +31,7 @@ class UsuarioController extends AbstractActionController{
 	
 	protected function iniciarSessaoAction(){
 	 	$data = $this->params()->fromPost();
-			var_dump($data);
+			//var_dump($data);
 			if ($data['id_usuario']) {
 				$ver_user = $this->verificarUsuario($_REQUEST['id_usuario']);
 				//var_dump($_REQUEST['id_usuario']);

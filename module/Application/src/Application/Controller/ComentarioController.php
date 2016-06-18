@@ -103,7 +103,7 @@ class ComentarioController extends AbstractActionController
 
         if($this->params()->fromPost()) {
             $data = $this->params()->fromPost();
-            var_dump($data['id_comentario']);
+            //var_dump($data['id_comentario']);
             if($this->session->id == $data['id_usuario']){
                 $comentario = $this->getEM()->find("Application\Entity\Comentario", $data['id_comentario']);
                 $this->getEM()->remove($comentario);
