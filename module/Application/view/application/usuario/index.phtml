@@ -1,21 +1,14 @@
-   <p>Logar 
-		<button type="button" id="bt-facebook">Facebook</button>
-	</p>
-   <div class="bs-docs-example">
-	   <div class="dropdown clearfix">
-		   <ul class="dropdown-menu list-group " role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
-			   <li><strong>Turmas que voce segue</strong></li>
-			   <?php  foreach ($turma as $tm) : ?>
-			   		<li class="list-group-item">
-					   <a  tabindex="-1" href="<?php echo $this->url('turma-post',
-						   							array('nome' => $tm['nome']
-					   							)); ?>"
-					   >
-						   <?php echo $tm['nome']."<span class=\"badge\">".$tm['n_post']."</span>";?>
-					   </a>
-				   </li>
+<h2>Turmas que você segue atualmente</h2>
+   <div class="card-columns">
+	   <?php  foreach ($turma as $tm) : ?>
+	   <!--<a  tabindex="-1" href="<?php echo $this->url('turma-post', array('nome' => $tm['nome'] )); ?>">-->
+		   <div class="card card-block text-xs-center">
+			   <h4 class="card-title"><?php echo $tm['nome'];?></h4>
+			   <p class="card-text">Voce esta seguindo esta turma, compartilhe seu conhecimento.</p>
+			   <p><span class="badge"> <?php echo "Existem cerca de ". $tm['n_post']." assunto(s)s até o momento.";?></span></p>
+			   <a href="<?php echo $this->url('turma-post', array('nome' => $tm['nome'] ));?>" class="btn btn-primary">Acompanhe...</a>
+		   </div>
+	   <!--</a>-->
+	   <?php endforeach; ?>
+	</div>
 
-			   <?php endforeach; ?>
-		   </ul>
-	   </div>
-   </div>
