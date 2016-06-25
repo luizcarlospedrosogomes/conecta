@@ -1,0 +1,29 @@
+<!--<div class="container">
+    <div class="row">
+
+ -->
+<div class="timeline-centered">
+    <?php foreach ($posts as $post):?>
+        <article class="timeline-entry">
+
+        <div class="timeline-entry-inner">
+
+            <div class="timeline-icon bg-success">
+                <i class="entypo-suitcase"></i>
+            </div>
+
+            <div class="timeline-label">
+                             <h2><a href="<?php echo $this->url('comentario',
+                        array('nome' => $post['turma'], 'id' => $post['id_post']
+                        ));?>"><?php echo $post['titulo'];?></a></h2>
+                <p><?php echo $post['conteudo'];?></p>
+                <p><strong><?php echo "Postado por ".$post['autor'];?></strong> </p>
+            </div>
+        </div>
+
+        </article>
+    <?php endforeach; ?>
+
+
+
+</div>
