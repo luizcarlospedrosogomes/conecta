@@ -103,6 +103,17 @@ return array(
                     ),
                 ),
             ),
+            'turma-chat' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/chat/[:nome][/]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Chat',
+                        'action'       => 'index',
+                    ),
+                ),
+            ),
             'usuario-logout' => array(
                 'type'    => 'literal',
                 'options' => array(
@@ -248,7 +259,8 @@ return array(
 			'Application\Controller\Usuario' => Controller\UsuarioController::class,
 			'Application\Controller\Turma' => Controller\TurmaController::class,
             'Application\Controller\Post' => Controller\PostController::class,
-            'Application\Controller\Comentario' => Controller\ComentarioController::class
+            'Application\Controller\Comentario' => Controller\ComentarioController::class,
+            'Application\Controller\Chat' => Controller\ChatController::class
         ),
     ),
 	'session' => array(

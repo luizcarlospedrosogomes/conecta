@@ -11,13 +11,18 @@
         article header span{margin: 10px}
         article{border: 1px solid; margin: 5px;}
         #post{margin-top: 100px;}
+        #chat{padding: .5em 1em; text-decoration: none; position: absolute; top:10%; margin-left: 100px}
+
 
     </style>
 
     <!--Verifica se usuario ja esta ingressado , se sim liberar btn postar.-->
     <?php if(isset($ingressar) && isset($usuario_session->id)){?>
         <button id="cadastrar_post" class="ui-state-default ui-corner-all">Postar</button>
+        <button id="chat" class="ui-state-default ui-corner-all"   onClick=" popup('<?php echo $this->url('turma-chat', array('nome' => $turma));?>', 'Chat')">Chat</button>
+
     <?php }?>
+</body>
     <?php if(!isset($ingressar) && isset($usuario_session->id)){?>
         <button id="ingressar_turma" class="ui-state-default ui-corner-all" onClick="ingressar(<?php echo $usuario_session->id;?>, <?php echo $id_turma;?>)">Ingressar</button>
     <?php }?>
@@ -279,6 +284,19 @@
          </form>
      </div>
      <script>
+
+         function popup(mylink, windowname) {
+             console.log(mylink);
+             if (!window.focus)return true;
+             var href;
+                 if (typeof(mylink) == 'string') href = mylink; else href = mylink.href;
+                 window.open(href, windowname, 'scrollbars=yes,width=400px, height=550px');
+                 return false;
+
+
+
+         }
+
          function ingressar(id_usuario, id_turma){
              $.post('<?php echo $this->url('turma-ingressar');?>',
                  {id_usuario:id_usuario, id_turma: id_turma},
